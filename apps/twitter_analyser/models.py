@@ -12,7 +12,7 @@ class TwitterProfile(models.Model):
     (Many-To-Many as every project user may follow several TwitterProfiles and they can be followed by several users).
     """
 
-    profile_id = models.CharField(max_length=15)
+    profile_id = models.IntegerField()
     username = models.CharField(max_length=30)
     save_date = models.DateField()
 
@@ -21,6 +21,9 @@ class TwitterProfile(models.Model):
 
     def __str__(self):
         return self.__repr__()
+
+    class Meta:
+        ordering = ['username', 'profile_id']
 
 
 class Tweet(models.Model):
@@ -32,18 +35,17 @@ class Tweet(models.Model):
         - creation_date - indicates when this Tweet has been posted
         - save_date - indicates when this Tweet has been saved to database
         - text - Tweet's text
-        - retweets, likes, responses - integers indicating how many retweets, likes or responses did the Tweet get
+        - retweets, likes - integers indicating how many retweets, likes or responses did the Tweet get
     Tweet is in relationships with TwitterProfile (Many-To-One as each Tweet has only one author) and Hashtag
     (Many-To-Many as every Tweet may have several Hashtags and they can be related to by several Tweets).
     """
 
-    tweet_id = models.CharField(max_length=15)
+    tweet_id = models.IntegerField()
     creation_date = models.DateField()
     save_date = models.DateField()
     text = models.CharField(max_length=300)
     retweets = models.IntegerField()
     likes = models.IntegerField()
-    responses = models.IntegerField()
     author = models.ForeignKey(TwitterProfile, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __repr__(self):
@@ -54,6 +56,9 @@ class Tweet(models.Model):
 
     def __str__(self):
         return self.__repr__()
+
+    class Meta:
+        ordering = ['creation_date', 'save_date', 'tweet_id']
 
 
 class Hashtag(models.Model):
@@ -77,3 +82,6 @@ class Hashtag(models.Model):
 
     def __str__(self):
         return self.__repr__()
+
+    class Meta:
+        ordering = ['save_date', 'text']
