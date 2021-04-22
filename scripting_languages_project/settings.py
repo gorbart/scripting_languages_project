@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import credentials
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'scripting_languages_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sl_database',
+        'USER': credentials.DB_USER,
+        'PASSWORD': credentials.DB_PASSWORD,
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
@@ -106,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EUROPE/WARSAW'
 
 USE_I18N = True
 
