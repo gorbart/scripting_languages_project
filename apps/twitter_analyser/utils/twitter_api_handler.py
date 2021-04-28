@@ -24,7 +24,7 @@ class TwitterApiHandler:
         for specified country
         """
 
-        return [{'text': trend['name'], 'volume': trend['tweet_volume']}
+        return [{'text': trend['name'], 'tweet_volume': trend['tweet_volume']}
                 for trend in self.api.trends_place(id=woeid)[0]['trends']
                 if trend['name'][0] == '#' and trend['tweet_volume']]
 
@@ -37,21 +37,21 @@ class TwitterApiHandler:
 
         return self.get_trending_hashtags(1)
 
-    def get_tweets_with_hashtag(self, hashtag, how_many):
+    def get_tweets_with_query(self, query, how_many):
         """
         Method for getting a list of Tweets for a given hashtag
-        :param hashtag: hashtag used in a query for searching matching posts
+        :param query: query used for searching matching posts, most frequently author's username or hashtags
         :param how_many: indicates how many Tweets should be iterated over
         :return: list of dictionaries with tweet's id, its creation date, text and numbers of retweets and likes
         """
 
-        return [{'twitter_id': tweet.id, 'creation_date': tweet.created_at,
+        return [{'tweet_id': tweet.id, 'creation_date': tweet.created_at,
                  'text': tweet.full_text if not hasattr(tweet, 'retweeted_status')
                  else tweet.retweeted_status.full_text,
                  'retweets': tweet.retweet_count, 'likes': tweet.favorite_count}
-                for tweet in tweepy.Cursor(self.api.search, q=hashtag, tweet_mode="extended").items(how_many)]
+                for tweet in tweepy.Cursor(self.api.search, q=query, tweet_mode="extended").items(how_many)]
 
-    def get_user(self, query):
+    def get_profile(self, query):
         """
         Method for getting specified Twitter's profile
         :param query: profile's username or id

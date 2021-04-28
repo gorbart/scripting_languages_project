@@ -22,6 +22,11 @@ class TwitterProfile(models.Model):
     def __str__(self):
         return self.__repr__()
 
+    def __eq__(self, other):
+        if isinstance(other, TwitterProfile):
+            return self.profile_id == other.profile_id and self.username == other.username
+        return False
+
     class Meta:
         ordering = ['username', 'profile_id']
 
@@ -57,6 +62,11 @@ class Tweet(models.Model):
     def __str__(self):
         return self.__repr__()
 
+    def __eq__(self, other):
+        if isinstance(other, Tweet):
+            return self.tweet_id == other.tweet_id and self.creation_date == other.creation_date
+        return False
+
     class Meta:
         ordering = ['creation_date', 'save_date', 'tweet_id']
 
@@ -82,6 +92,11 @@ class Hashtag(models.Model):
 
     def __str__(self):
         return self.__repr__()
+
+    def __eq__(self, other):
+        if isinstance(other, Hashtag):
+            return self.text == other.text
+        return False
 
     class Meta:
         ordering = ['save_date', 'text']
