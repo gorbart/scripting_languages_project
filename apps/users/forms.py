@@ -8,7 +8,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('username', 'email', 'password')
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
@@ -19,3 +19,8 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match")
 
         return cleaned_data
+
+
+class LoginForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField()

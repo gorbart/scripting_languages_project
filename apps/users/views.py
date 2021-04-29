@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.views import View
 
-from apps.users.forms import UserForm
+from apps.users.forms import UserForm, LoginForm
 from apps.users.models import AppUser
 
 
@@ -12,8 +13,10 @@ class RegisterView(View):
         user_form = self.form_class(request.POST)
         registered = False
         if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
+
+            user = user_form.save(commit=False)
+            user.set_password(user_form.cleaned_data['password'])
+            user.save()
             appuser = AppUser()
             appuser.user = user
             appuser.save()
@@ -27,3 +30,25 @@ class RegisterView(View):
         user_form = self.form_class()
 
         return render(request, 'users/register.html', {'user_form': user_form, 'registered': False})
+
+
+class LoginView(View):
+    form_class = LoginForm
+
+    def post(self, request):
+        login_form = self.form_class(request.POST)
+        if login_form.is_valid():
+            user = authenticate(username=login_form.data['username'], password=login_form.data['password'])
+            if user:
+                login(request, user)
+                return render(request, 'twitter_analyser/index.html')
+
+        else:
+            print(login_form.errors)
+
+        return render(request, 'users/login.html', {'login_form': login_form})
+
+    def get(self, request):
+        user_form = self.form_class()
+
+        return render(request, 'users/login.html', {'login_form': user_form})

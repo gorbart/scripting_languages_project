@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
-    <title>Register to Twitter analyser</title>
+    <title>Login in to Twitter analyser</title>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,21 +13,18 @@
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
 </head>
-
 <body>
 <div class="container">
     <div class="row justify-content-center">
-        {% if registered %}
-            <h1>You are now registered</h1>
-        {% else %}
-            <div style="width: 500px">
-                <h3>Register to use <strong>Twitter analyser</strong></h3>
+        <div>
+            <div>
+                <h3>Login to <br><strong>Twitter analyser</strong></h3>
             </div>
             <div class="row justify-content-center" style="width: 400px">
                 <form enctype="multipart/form-data" method="POST">
-                    {% if user_form.errors %}
+                    {% if login_form.errors %}
                         <ul class="errorlist">
-                            {% for key, error in user_form.errors.items %}
+                            {% for key, error in login_form.errors.items %}
                                 <li><strong>{{ error|escape }}</strong></li>
                             {% endfor %}
                         </ul>
@@ -37,33 +34,22 @@
                     {% csrf_token %}
 
                     <div class="form-row">
-                        <label for="{{ user_form.username.id_for_label }}">Username:</label> {{ user_form.username }}
+                        <label for="{{ login_form.username.id_for_label }}">Username:</label> {{ login_form.username }}
                     </div>
                     <div class="form-row">
-                        <label for="{{ user_form.email.id_for_label }}">Email:</label> {{ user_form.email }}
+                        <label for="{{ login_form.password.id_for_label }}">Password:</label> {{ login_form.password }}
                     </div>
-                    <div class="form-row">
-                        <label for="{{ user_form.password.id_for_label }}">Password:</label> {{ user_form.password }}
-                    </div>
-                    <div class="form-row">
-                        <label for="{{ user_form.confirm_password.id_for_label }}">Confirm
-                            password:</label> {{ user_form.confirm_password }}
-                    </div>
+
                     <div style="height: 50px"></div>
-                    <input type="submit" name="" value="Register">
+                    <input type="submit" name="" value="Login">
 
                 </form>
             </div>
-        {% endif %}
+        </div>
+        <div class="d-flex justify-content-center align-items-end" style="height: 100px">
+            <span><a href="{% url 'users:register' %}">Don't have an account yet? Register here!</a></span>
+        </div>
     </div>
-</div>
-<div class="d-flex justify-content-center align-items-end" style="height: 100px">
-<span><a href="{% url 'users:login' %}">
-    {% if not registered %}
-        Have an account already?
-    {% endif %}
-    Log in! </a></span>
 </div>
 </body>
 </html>
-
