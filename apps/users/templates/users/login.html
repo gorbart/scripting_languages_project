@@ -21,6 +21,9 @@
                 <h3>Login to <br><strong>Twitter analyser</strong></h3>
             </div>
             <div class="row justify-content-center" style="width: 400px">
+            {% if message %}
+                <div style="color: red"><strong>{{ message }}</strong></div>
+            {% endif %}
                 <form enctype="multipart/form-data" method="POST">
                     {% if login_form.errors %}
                         <ul class="errorlist">

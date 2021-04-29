@@ -1,5 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
 
 from apps.users.forms import UserForm, LoginForm
@@ -27,6 +28,9 @@ class RegisterView(View):
         return render(request, 'users/register.html', {'user_form': user_form, 'registered': registered})
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'twitter_analyser/index.html')
+
         user_form = self.form_class()
 
         return render(request, 'users/register.html', {'user_form': user_form, 'registered': False})
@@ -49,6 +53,16 @@ class LoginView(View):
         return render(request, 'users/login.html', {'login_form': login_form})
 
     def get(self, request):
-        user_form = self.form_class()
+        if request.user.is_authenticated:
+            return render(request, 'twitter_analyser/index.html')
 
-        return render(request, 'users/login.html', {'login_form': user_form})
+        login_form = self.form_class()
+
+        return render(request, 'users/login.html', {'login_form': login_form})
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        return render(request, 'users/login.html', {'login_form': LoginForm(), 'message': 'Successfully logged out'})
