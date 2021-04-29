@@ -1,0 +1,37 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(45deg, mediumpurple, white, mediumpurple);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    width: 25%;
+    text-align: center;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.errorlist {
+    list-style-type: none;
+    color: red;
+}
+
+.form-row {
+    left: 0;
+    top: 0;
+    margin: 8px;
+    text-align: right;
+}
+
+.form-row label {
+    float: left;
+}
