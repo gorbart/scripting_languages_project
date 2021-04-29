@@ -4,9 +4,8 @@ from django.shortcuts import render
 from django.views import View
 
 
-class IndexView(View, LoginRequiredMixin):
-    raise_exception = False
-    login_url = 'users/login'
+class IndexView(View):
 
+    # @login_required(login_url='users/login')
     def get(self, request):
         return render(request, 'twitter_analyser/index.html')
