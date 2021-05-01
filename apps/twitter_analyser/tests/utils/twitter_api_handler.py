@@ -5,29 +5,33 @@ from apps.twitter_analyser.utils.twitter_api_handler import TwitterApiHandler
 
 
 class TwitterApiHandlerTest(SimpleTestCase):
+    api_handler = TwitterApiHandler(credentials.TWITTER_KEY, credentials.TWITTER_SECRET)
 
     def test_returns_hashtags_with_volume(self):
-        api_handler = TwitterApiHandler(credentials.TWITTER_KEY, credentials.TWITTER_SECRET)
-        hashtags = api_handler.get_trending_hashtags()
+        hashtags_num = 10
+        hashtags = self.api_handler.get_trending_hashtags(hashtags_num)
         self.assertTrue(hashtags[0]['text'][0] == '#')
         self.assertTrue(hashtags[0]['tweet_volume'] > 0)
 
-    def test_returns_tweets(self):
+    def test_returns_tweets_with_hashtag(self):
         tweets_num = 25
         hashtag = '#Django'
-        api_handler = TwitterApiHandler(credentials.TWITTER_KEY, credentials.TWITTER_SECRET)
-        tweets = api_handler.get_tweets_with_query(hashtag, tweets_num)
+        tweets = self.api_handler.get_tweets_with_hashtag(hashtag, tweets_num)
         self.assertEqual(len(tweets), tweets_num)
         self.assertTrue(hashtag.lower() in tweets[0]['text'].lower())
 
+    def test_returns_tweets_with_author(self):
+        tweets_num = 25
+        author = 'djangoproject'
+        tweets = self.api_handler.get_tweets_for_author(author, tweets_num)
+        self.assertEqual(len(tweets), tweets_num)
+
     def test_returns_user_by_name(self):
         username = 'djangoproject'
-        api_handler = TwitterApiHandler(credentials.TWITTER_KEY, credentials.TWITTER_SECRET)
-        user = api_handler.get_profile(username)
+        user = self.api_handler.get_profile(username)
         self.assertEqual(user['username'], username)
 
     def test_returns_user_by_id(self):
         profile_id = 191225303
-        api_handler = TwitterApiHandler(credentials.TWITTER_KEY, credentials.TWITTER_SECRET)
-        user = api_handler.get_profile(profile_id)
+        user = self.api_handler.get_profile(profile_id)
         self.assertEqual(user['profile_id'], profile_id)

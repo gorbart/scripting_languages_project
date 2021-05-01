@@ -111,7 +111,7 @@ class LogoutView(LoginRequiredMixin, View):
 
     def get(self, request):
         """
-        method logs user out in the app (if he is earlier logged in) and redirects him to login page
+        Method logs user out in the app (if he is earlier logged in) and redirects him to login page
         :param request: GET request
         :return: redirect to login page
         """

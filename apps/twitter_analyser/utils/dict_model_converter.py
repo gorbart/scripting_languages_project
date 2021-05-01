@@ -52,7 +52,8 @@ class DictModelConverter:
         :return: Hashtag object with attributes like in dictionary above and a save date which is current time
         """
 
-        return Hashtag(save_date=datetime.datetime.now(), text=hashtag_dict['text'], tweet_volume=['tweet_volume'])
+        return Hashtag(save_date=datetime.datetime.now(), text=hashtag_dict['text'],
+                       tweet_volume=hashtag_dict['tweet_volume'])
 
     @staticmethod
     def get_hashtag_list(hashtag_dict_list):
