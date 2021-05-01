@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -49,7 +50,8 @@ class LoginView(View):
             if user and user.is_active:
                 login(request, user)
                 return render(request, 'twitter_analyser/index.html')
-
+            else:
+                messages.error(request, 'Username or password not correct')
         else:
             print(login_form.errors)
 

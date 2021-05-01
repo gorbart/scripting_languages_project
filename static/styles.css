@@ -15,24 +15,11 @@ body {
     text-align: center;
 }
 
-a {
+.nav-link a {
+    color: white;
+}
+
+a:not(.nav-link) {
     color: black;
     text-decoration: none;
-}
-
-.errorlist {
-    text-align: center;
-    list-style-type: none;
-    color: red;
-}
-
-.form-row {
-    left: 0;
-    top: 0;
-    margin: 8px;
-    text-align: right;
-}
-
-.form-row label {
-    float: left;
 }
