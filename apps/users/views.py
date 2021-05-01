@@ -1,7 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DeleteView
 
 from apps.users.forms import UserForm, LoginForm
 from apps.users.models import AppUser
@@ -43,7 +46,7 @@ class LoginView(View):
         login_form = self.form_class(request.POST)
         if login_form.is_valid():
             user = authenticate(username=login_form.data['username'], password=login_form.data['password'])
-            if user:
+            if user and user.is_active:
                 login(request, user)
                 return render(request, 'twitter_analyser/index.html')
 
@@ -61,8 +64,14 @@ class LoginView(View):
         return render(request, 'users/login.html', {'login_form': login_form})
 
 
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin, View):
 
     def get(self, request):
         logout(request)
         return redirect('users:login')
+
+
+class DeleteUserView(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('users:login')
+    template_name = 'users/user_confirm_delete.html'
