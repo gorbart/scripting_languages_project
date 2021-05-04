@@ -15,7 +15,7 @@ class TwitterApiPipeline:
     def __init__(self, api_key=credentials.TWITTER_KEY, api_secret=credentials.TWITTER_SECRET):
         self.api_handler = TwitterApiHandler(api_key, api_secret)
 
-    def get_top_hashtags_worldwide(self, how_many=10):
+    def get_top_hashtags_worldwide(self, how_many=20):
         """
         Method for getting trending in the entire world hashtag object instances straight from Twitter API
         :param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them
@@ -35,7 +35,7 @@ class TwitterApiPipeline:
         """
 
         tweet_dicts = self.api_handler.get_tweets_with_hashtag(hashtag, how_many)
-        return DictModelConverter.get_tweets_list(tweet_dicts)
+        return DictModelConverter.get_tweets_list(tweet_dicts, how_many)
 
     def get_recent_tweets_for_author(self, author, how_many=10):
         """
@@ -46,7 +46,7 @@ class TwitterApiPipeline:
         """
 
         tweet_dicts = self.api_handler.get_tweets_for_author(author, how_many)
-        return DictModelConverter.get_tweets_list(tweet_dicts)
+        return DictModelConverter.get_tweets_list(tweet_dicts, how_many)
 
     def get_twitter_profile(self, query):
         """

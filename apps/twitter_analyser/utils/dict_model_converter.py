@@ -1,3 +1,4 @@
+import collections
 import datetime
 
 from apps.twitter_analyser.models import TwitterProfile, Tweet, Hashtag
@@ -34,15 +35,23 @@ class DictModelConverter:
                      likes=tweet_dict['likes'])
 
     @staticmethod
-    def get_tweets_list(tweet_dict_list):
+    def get_tweets_list(tweet_dict_list, how_many):
         """
         Method for getting Tweet class objects' list from list of dictionaries of class's attributes
+        :param how_many: how many Tweet object should be in the resulting list as tweet_dict_list doesn't provide unique
+        elements
         :param tweet_dict_list: list of dictionaries of format {'tweet_id': int, 'creation_date': date, 'text': str,
         'retweets': int, 'likes': int}
         :return: list of Tweet objects with attributes like in dictionary above and a save date which is current time
         """
 
-        return [DictModelConverter.get_tweet_from_dict(tweet_dict) for tweet_dict in tweet_dict_list]
+        unique_list = []
+
+        for tweet in [DictModelConverter.get_tweet_from_dict(tweet_dict) for tweet_dict in tweet_dict_list]:
+            if tweet not in unique_list:
+                unique_list.append(tweet)
+
+        return unique_list[:how_many]
 
     @staticmethod
     def get_hashtag_from_dict(hashtag_dict):

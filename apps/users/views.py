@@ -81,7 +81,7 @@ class LoginView(View):
             user = authenticate(username=login_form.data['username'], password=login_form.data['password'])
             if user and user.is_active:
                 login(request, user)
-                return render(request, 'twitter_analyser/index.html')
+                return redirect('twitter_analyser:index')
             else:
                 messages.error(request, 'Username or password not correct')
         else:

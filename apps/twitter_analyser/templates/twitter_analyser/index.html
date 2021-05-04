@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href={% static "styles.css" %}>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href={% static "styles.css" %}>
 </head>
 
 <body>
@@ -23,20 +23,181 @@
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item px-2"><a class="nav-link" href="{% url 'users:logout' %}">Logout</a></li>
-                <li class="nav-item px-2"><a class="nav-link" href="{% url 'users:deleteuser' user.id %}">Delete account</a></li>
+                <li class="nav-item px-2"><a class="nav-link" href="{% url 'users:deleteuser' user.id %}">Delete account
+                </a></li>
                 <li class="nav-item px-2"><a class="nav-link" href="#">Send report by email</a></li>
                 <li class="dropdown nav-item px-2">
-                    <a class="nav-link" href="#" data-bs-toggle="dropdown" class="dropdown-toggle">Choose date
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Choose date
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li><a href="#">Separated link</a></li>
+                        {% for date in dates %}
+                            {#                            <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
+                            <li><a href="#">date</a></li>
+                        {% endfor %}
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most trending hashtags in the world
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for trending_hashtag in trending_hashtags %}
+                            <li>{{ trending_hashtag }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most trending hashtags in the world
+                </div>
+                <div class="card-body">
+                    {% if trending_hashtags_chart %}
+                        {{ trending_hashtags_chart|safe }}
+                    {% else %}
+                        <p>No chart was provided.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2">
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="hashtag_input">Type in hashtag to follow:</label>
+                    <input type="text" id="hashtag_input" name="hashtag_input">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2">
+            {% csrf_token %}
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Choose hashtag
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                {% for users_hashtag in users_hashtags %}
+                    {#                  <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
+                    <li><a href="#">{{ users_hashtag.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most popular Tweets for {{ current_hashtag.text }}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for hashtags_tweet in hashtags_tweets %}
+                            <li>{{ hashtags_tweet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most popular Tweets for {{ current_hashtag.text }}
+                </div>
+                <div class="card-body">
+                    {% if hashtags_tweets_chart %}
+                        {{ hashtags_tweets_chart|safe }}
+                    {% else %}
+                        <p>No chart was provided.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+<div class="row">
+        <div class="col-5"></div>
+        <div class="col-2">
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="profile_input">Type in Twitter user's username to follow:</label>
+                    <input type="text" id="profile_input" name="profile_input">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2">
+            {% csrf_token %}
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Choose profile
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                {% for users_profile in users_profiles %}
+                    {#                  <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
+                    <li><a href="#">{{ users_profile.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most popular Tweets for {{ current_profile.username }}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for profiles_tweet in profiles_tweets %}
+                            <li>{{ profiles_tweet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Most popular Tweets for {{ current_profile.username }}
+                </div>
+                <div class="card-body">
+                    {% if profiles_tweets_chart %}
+                        {{ profiles_tweets_chart|safe }}
+                    {% else %}
+                        <p>No chart was provided.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
 </body>
 </html>

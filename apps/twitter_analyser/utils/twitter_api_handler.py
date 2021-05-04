@@ -46,14 +46,15 @@ class TwitterApiHandler:
         Method for getting a list of Tweets for a given hashtag
         :param query: string query used for searching matching posts - hashtags
         :param how_many: indicates how many Tweets should be iterated over
-        :return: list of dictionaries with tweet's id, its creation date, text and numbers of retweets and likes
+        :return: list of dictionaries with tweet's id, its creation date, text and numbers of retweets and likes, which
+        is 5 times bigger than how_many as some tweets may be retweets of each other
         """
 
-        return [{'tweet_id': tweet.id, 'creation_date': tweet.created_at,
+        return [{'tweet_id': str(tweet.id), 'creation_date': tweet.created_at,
                  'text': tweet.full_text if not hasattr(tweet, 'retweeted_status')
                  else tweet.retweeted_status.full_text,
-                 'retweets': tweet.retweet_count, 'likes': tweet.favorite_count}
-                for tweet in tweepy.Cursor(self.api.search, q=query, tweet_mode="extended").items(how_many)]
+                 'retweets': tweet.retweet_count, 'likes': tweet.favorite_count} for tweet in
+                tweepy.Cursor(self.api.search, q=query, tweet_mode="extended").items(how_many * 5)]
 
     def get_tweets_for_author(self, author, how_many):
         """
@@ -63,7 +64,7 @@ class TwitterApiHandler:
         :return: list of dictionaries with tweet's id, its creation date, text and numbers of retweets and likes
         """
 
-        return [{'tweet_id': tweet.id, 'creation_date': tweet.created_at,
+        return [{'tweet_id': str(tweet.id), 'creation_date': tweet.created_at,
                  'text': tweet.text, 'retweets': tweet.retweet_count, 'likes': tweet.favorite_count}
                 for tweet in tweepy.Cursor(self.api.user_timeline, id=author).items(how_many)]
 
@@ -78,4 +79,4 @@ class TwitterApiHandler:
             profile = self.api.lookup_users(screen_name=query)[0]
         else:
             profile = self.api.lookup_users(user_id=query)[0]
-        return {'profile_id': profile.id, 'username': profile.screen_name}
+        return {'profile_id': str(profile.id), 'username': profile.screen_name}

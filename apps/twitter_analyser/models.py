@@ -12,7 +12,7 @@ class TwitterProfile(models.Model):
     (Many-To-Many as every project user may follow several TwitterProfiles and they can be followed by several users).
     """
 
-    profile_id = models.IntegerField()
+    profile_id = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
     save_date = models.DateField()
 
@@ -45,7 +45,7 @@ class Tweet(models.Model):
     (Many-To-Many as every Tweet may have several Hashtags and they can be related to by several Tweets).
     """
 
-    tweet_id = models.IntegerField()
+    tweet_id = models.CharField(max_length=30)
     creation_date = models.DateField()
     save_date = models.DateField()
     text = models.CharField(max_length=300)
@@ -54,9 +54,9 @@ class Tweet(models.Model):
     author = models.ForeignKey(TwitterProfile, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __repr__(self):
-        res_str = f"Tweet posted on {self.creation_date} with text: {self.text}."
+        res_str = f"{self.text}. Posted on {self.creation_date}"
         if self.author:
-            res_str += f" Posted by {self.author.username}"
+            res_str += f" by {self.author.username}"
         return res_str
 
     def __str__(self):
@@ -64,7 +64,7 @@ class Tweet(models.Model):
 
     def __eq__(self, other):
         if isinstance(other, Tweet):
-            return self.tweet_id == other.tweet_id and self.creation_date == other.creation_date
+            return self.tweet_id == other.tweet_id or self.text == other.text
         return False
 
     class Meta:
@@ -84,7 +84,7 @@ class Hashtag(models.Model):
 
     save_date = models.DateField()
     text = models.CharField(max_length=50)
-    tweet_volume = models.IntegerField()
+    tweet_volume = models.IntegerField(blank=True, null=True)
     tweets = models.ManyToManyField(Tweet)
 
     def __repr__(self):
