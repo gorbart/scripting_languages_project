@@ -7,7 +7,7 @@ from django.views import View
 from apps.twitter_analyser.models import Hashtag
 from apps.twitter_analyser.utils.plot_painter import PlotPainter
 from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
-from apps.twitter_analyser.utils.utils import get_all_dates_for_user
+from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new_following
 
 
 class DateView(LoginRequiredMixin, View):
@@ -42,21 +42,23 @@ class DateView(LoginRequiredMixin, View):
 
             hashtags_tweets_list = [hashtags_tweet for hashtags_tweet in hashtags_tweets]
 
-            hashtags_tweets_list.sort(key=lambda tweet: tweet.retweets, reverse=True)
+            hashtags_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
+            hashtags_tweets_list = hashtags_tweets_list[:10]
             hashtags_tweets_chart = PlotPainter.plot_tweets(hashtags_tweets_list)
         else:
             current_hashtag = None
-            hashtags_tweets = None
+            hashtags_tweets_list = None
             hashtags_tweets_chart = None
 
         if users_profiles:
             current_profile = users_profiles[0]
 
-            profiles_tweets = current_profile.tweets.filter(save_date__eq=current_date).distinct()
+            profiles_tweets = current_profile.tweet_set.filter(save_date=current_date).distinct()
 
             profiles_tweets_list = [profiles_tweet for profiles_tweet in profiles_tweets]
 
-            profiles_tweets_list.sort(key=lambda tweet: tweet.retweets, reverse=True)
+            profiles_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
+            profiles_tweets_list = profiles_tweets_list[:10]
             profiles_tweets_chart = PlotPainter.plot_tweets(profiles_tweets_list)
         else:
             current_profile = None
@@ -69,21 +71,12 @@ class DateView(LoginRequiredMixin, View):
                                                                'users_hashtags': users_hashtags,
                                                                'users_profiles': users_profiles,
                                                                'current_hashtag': current_hashtag,
-                                                               'hashtags_tweets': hashtags_tweets,
+                                                               'hashtags_tweets': hashtags_tweets_list,
                                                                'hashtags_tweets_chart': hashtags_tweets_chart,
                                                                'current_profile': current_profile,
                                                                'profiles_tweets': profiles_tweets_list,
                                                                'profiles_tweets_chart': profiles_tweets_chart})
 
     def post(self, request, year, month, day):
-        hashtag_input = request.POST.get('hashtag_input')
-        if hashtag_input:
-            hashtags_tweets = self.api_pipeline.get_recent_tweets_for_hashtag(request.POST.get('hashtag_input'))
-            if hashtags_tweets:
-                hashtag = Hashtag.objects.create(text=hashtag_input, save_date=datetime.datetime.now())
-                for tweet in hashtags_tweets:
-                    tweet.save()
-                hashtag.tweets.add(*hashtags_tweets)
-                request.user.appuser.followed_hashtags.add(hashtag)
-
-        return redirect('twitter_analyser:date', year, month, day)
+        handle_new_following(request, self.api_pipeline)
+        return redirect('twitter_analyser:index')

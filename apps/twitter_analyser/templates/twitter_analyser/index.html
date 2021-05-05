@@ -158,7 +158,7 @@
             <ul class="dropdown-menu">
                 {% for users_profile in users_profiles %}
                     {#                  <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
-                    <li><a href="#">{{ users_profile.text }}</a></li>
+                    <li><a href="#">{{ users_profile.username }}</a></li>
                 {% endfor %}
             </ul>
         </div>

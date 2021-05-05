@@ -24,7 +24,7 @@ class TwitterProfile(models.Model):
 
     def __eq__(self, other):
         if isinstance(other, TwitterProfile):
-            return self.profile_id == other.profile_id and self.username == other.username
+            return self.profile_id == other.profile_id or self.username == other.username
         return False
 
     class Meta:
