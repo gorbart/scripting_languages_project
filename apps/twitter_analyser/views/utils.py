@@ -3,18 +3,14 @@ import datetime
 from apps.twitter_analyser.models import Hashtag
 
 
-def get_all_dates_for_user(users_hashtags, users_profiles, trending_hashtags_from_db):
-    hashtag_dates = [hashtag.save_date for hashtag in users_hashtags]
-    profile_dates = [profile.save_date for profile in users_profiles]
-    trending_hashtags_from_db_dates = [hashtag.save_date for hashtag in trending_hashtags_from_db]
-    hashtag_tweet_dates = [tweet.save_date for hashtag in users_hashtags for tweet in hashtag.tweets.all()]
-    profile_tweet_dates = [tweet.save_date for profile in users_profiles for tweet in profile.tweet_set.all()]
-    dates = set(hashtag_dates + profile_dates + hashtag_tweet_dates + profile_tweet_dates
-                + trending_hashtags_from_db_dates)
-    return list(dates)
-
-
 def handle_new_following(request, api_pipeline):
+    """
+    handle_new_following takes POST request and TwitterAPIPipeline instances and with query from the first one uses
+    the pipeline to retrieve Hashtag or TwitterProfile with characteristics given by the user and most Tweets with these
+    new followings. These contents are then stored in the request parameter (it's modified).
+    :param request: POST request with search query
+    :param api_pipeline: TwitterAPIPipeline instance, used for searching for Tweets, Hashtags and Profiles
+    """
     hashtag_input = request.POST.get('hashtag_input')
     if hashtag_input:
         hashtags_tweets = api_pipeline.get_recent_tweets_for_hashtag(hashtag_input)

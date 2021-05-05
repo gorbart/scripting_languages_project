@@ -11,16 +11,38 @@ from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new
 
 
 class DateView(LoginRequiredMixin, View):
+    """
+    DateView class is used to handle rendering index page of Twitter Analyser with contents retrieved from database
+    saved on a given date.
+    Attributes:
+        - api_pipeline TwitterApiPipeline object with credentials assigned to this project
+    """
+
     api_pipeline = TwitterApiPipeline()
 
     def get(self, request, year, month, day):
+        """
+        get method renders index.html with contents retrieved from database related to the first alphabetically Hashtag
+        and TwitterProfile instances and saved on given date.
+        :param day: day of searched date
+        :param month: month of searched date
+        :param year: year of searched date
+        :param request: GET request
+        :return: rendered index.html page with dictionary containing current date (here year/month/date parameters),
+        list of dates records have been saved in database, list of trending in the world hashtags on given day,
+        chart presenting their popularity, lists of hashtags and Twitter profiles followed by user, current hashtag
+        (alphabetically first), list of most popular posts related to it, chart presenting their
+        statistics, current profile (alphabetically first), list of most popular posts
+        related to it and chart presenting their statistics
+        """
+
         appuser = request.user.appuser
         users_hashtags = appuser.followed_hashtags.all()
         users_profiles = appuser.followed_profiles.all()
 
         trending_hashtags_from_db = Hashtag.objects.all()
 
-        dates = get_all_dates_for_user(users_hashtags, users_profiles, trending_hashtags_from_db)
+        dates = list(set([hashtag.save_date for hashtag in trending_hashtags_from_db]))
 
         current_date = datetime.datetime(year, month, day)
 
@@ -79,5 +101,14 @@ class DateView(LoginRequiredMixin, View):
                                                                'profiles_tweets_chart': profiles_tweets_chart})
 
     def post(self, request, year, month, day):
+        """
+        post method is used to follow new hashtags and profiles
+        :param day: day in view's url; ignored here
+        :param month: month in view's url; ignored here
+        :param year: year in view's url; ignored here
+        :param request: POST request with demanded hashtag or profile username
+        :return: redirection to index page
+        """
+
         handle_new_following(request, self.api_pipeline)
         return redirect('twitter_analyser:index')

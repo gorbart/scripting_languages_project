@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
@@ -11,16 +9,35 @@ from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new
 
 
 class IndexView(LoginRequiredMixin, View):
+    """
+    IndexView class is used to handle rendering index page of Twitter Analyser with contents retrieved from Twitter API.
+    It also saves the contents in database.
+    Attributes:
+        - api_pipeline TwitterApiPipeline object with credentials assigned to this project
+    """
+
     api_pipeline = TwitterApiPipeline()
 
     def get(self, request):
+        """
+        get method renders index.html with contents retrieved from Twitter API and default (first alphabetically)
+        followed Hashtag and TwitterProfile instances.
+        :param request: GET request
+        :return: rendered index.html page with dictionary containing current date (here None as we don't retrieve
+        anything from database; only from Twitter API), list of dates application has been used, list of trending in the
+        world hashtags retrieved from Twitter API, chart presenting their popularity, lists of hashtags and Twitter
+        profiles followed by user, current hashtag (first alphabetically), list of most popular posts related to it,
+        chart presenting their statistics, current profile (first alphabetically), list of most popular posts related to
+        it and chart presenting their statistics
+        """
+
         appuser = request.user.appuser
         users_hashtags = appuser.followed_hashtags.all()
         users_profiles = appuser.followed_profiles.all()
 
         trending_hashtags_from_db = Hashtag.objects.all()
 
-        dates = get_all_dates_for_user(users_hashtags, users_profiles, trending_hashtags_from_db)
+        dates = list(set([hashtag.save_date for hashtag in trending_hashtags_from_db]))
 
         trending_hashtags = self.api_pipeline.get_top_hashtags_worldwide()
         trending_hashtags.sort(key=lambda hashtag: hashtag.tweet_volume, reverse=True)
@@ -86,5 +103,11 @@ class IndexView(LoginRequiredMixin, View):
                                                                'profiles_tweets_chart': profiles_tweets_chart})
 
     def post(self, request):
+        """
+        post method is used to follow new hashtags and profiles
+        :param request: POST request with demanded hashtag or profile username
+        :return: redirection to index page
+        """
+
         handle_new_following(request, self.api_pipeline)
         return redirect('twitter_analyser:index')
