@@ -17,7 +17,6 @@ import credentials
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'django-insecure-re+g1hx1(8n6fex10r%b2mapz3z!f&1w_vk9d#qf^aq&t1^^^#
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -74,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scripting_languages_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -86,9 +83,15 @@ DATABASES = {
         'PASSWORD': credentials.DB_PASSWORD,
         'HOST': '127.0.0.1',
         'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': 'SET character_set_connection=utf8mb4;'
+                            'SET collation_connection=utf8mb4_unicode_ci;'
+                            "SET NAMES 'utf8mb4';"
+                            "SET CHARACTER SET utf8mb4;"
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -108,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -121,7 +123,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

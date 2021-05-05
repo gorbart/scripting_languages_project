@@ -18,7 +18,7 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Twitter analyser</a>
+            <a class="navbar-brand" href="{% url 'twitter_analyser:index' %}">Twitter analyser</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav me-auto">
@@ -31,8 +31,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         {% for date in dates %}
-                            {#                            <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
-                            <li><a href="#">date</a></li>
+                            <li><a href="/twitter_analyser/{{ date.year }}/{{ date.month }}/{{ date.day }}/">{{ date }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
@@ -136,7 +135,7 @@
         <div class="col-sm-2"></div>
     </div>
 
-<div class="row">
+    <div class="row">
         <div class="col-5"></div>
         <div class="col-2">
             <form enctype="multipart/form-data" method="POST">

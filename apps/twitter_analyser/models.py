@@ -48,7 +48,7 @@ class Tweet(models.Model):
     tweet_id = models.CharField(max_length=30)
     creation_date = models.DateField()
     save_date = models.DateField()
-    text = models.CharField(max_length=300)
+    text = models.CharField(max_length=500)
     retweets = models.IntegerField()
     likes = models.IntegerField()
     author = models.ForeignKey(TwitterProfile, blank=True, null=True, on_delete=models.SET_NULL)
