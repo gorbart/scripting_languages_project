@@ -31,7 +31,9 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         {% for date in dates %}
-                            <li><a href="/twitter_analyser/{{ date.year }}/{{ date.month }}/{{ date.day }}/">{{ date }}</a></li>
+                            <li>
+                                <a href="/twitter_analyser/{{ date.year }}/{{ date.month }}/{{ date.day }}/">{{ date }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </li>
@@ -95,8 +97,13 @@
                 <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 {% for users_hashtag in users_hashtags %}
-                    {#                  <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
-                    <li><a href="#">{{ users_hashtag.text }}</a></li>
+                    {% if current_date %}
+                        <li>
+                            <a href="/twitter_analyser/{{ current_date.year }}/{{ current_date.month }}/{{ current_date.day }}/%23{{ users_hashtag.text|slice:"1:" }}/">{{ users_hashtag.text }}</a>
+                        </li>
+                    {% else %}
+                        <li><a href="/twitter_analyser/%23{{ users_hashtag.text|slice:"1:" }}/">{{ users_hashtag.text }}</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
@@ -157,8 +164,13 @@
                 <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 {% for users_profile in users_profiles %}
-                    {#                  <li><a href="{% url 'twitter_analyser:index' date %}">date</a></li>#}
-                    <li><a href="#">{{ users_profile.username }}</a></li>
+                    {% if current_date %}
+                        <li>
+                            <a href="/twitter_analyser/{{ current_date.year }}/{{ current_date.month }}/{{ current_date.day }}/{{ users_profile.username }}/">{{ users_profile.username }}</a>
+                        </li>
+                    {% else %}
+                        <li><a href="/twitter_analyser/{{ users_profile.username }}/">{{ users_profile.username }}</a></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

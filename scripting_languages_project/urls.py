@@ -20,7 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('users/', include('apps.users.urls')),
-    url(r'^twitter_analyser/', include('apps.twitter_analyser.urls'))
+    url('twitter_analyser/', include('apps.twitter_analyser.urls')),
 ]
 
 handler404 = 'scripting_languages_project.views.view_404'

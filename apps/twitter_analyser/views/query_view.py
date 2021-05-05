@@ -1,7 +1,5 @@
-import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views import View
 
 from apps.twitter_analyser.models import Hashtag
@@ -10,10 +8,10 @@ from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
 from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new_following
 
 
-class IndexView(LoginRequiredMixin, View):
+class QueryView(LoginRequiredMixin, View):
     api_pipeline = TwitterApiPipeline()
 
-    def get(self, request):
+    def get(self, request, query):
         appuser = request.user.appuser
         users_hashtags = appuser.followed_hashtags.all()
         users_profiles = appuser.followed_profiles.all()
@@ -31,7 +29,7 @@ class IndexView(LoginRequiredMixin, View):
                 trending_hashtag.save()
 
         if users_hashtags:
-            current_hashtag = users_hashtags[0]
+            current_hashtag = users_hashtags.filter(text=query)[0] if query[0] == '#' else users_hashtags[0]
 
             current_hashtag_saved_tweets = current_hashtag.tweets.all()
 
@@ -52,7 +50,7 @@ class IndexView(LoginRequiredMixin, View):
             hashtags_tweets_chart = None
 
         if users_profiles:
-            current_profile = users_profiles[0]
+            current_profile = users_profiles.filter(username=query)[0] if query[0] != '#' else users_profiles[0]
 
             current_profile_saved_tweets = current_profile.tweet_set.all()
 
@@ -85,6 +83,6 @@ class IndexView(LoginRequiredMixin, View):
                                                                'profiles_tweets': profiles_tweets,
                                                                'profiles_tweets_chart': profiles_tweets_chart})
 
-    def post(self, request):
+    def post(self, request, query):
         handle_new_following(request, self.api_pipeline)
         return redirect('twitter_analyser:index')

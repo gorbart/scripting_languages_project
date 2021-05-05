@@ -10,10 +10,10 @@ from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
 from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new_following
 
 
-class DateView(LoginRequiredMixin, View):
+class QueryDateView(LoginRequiredMixin, View):
     api_pipeline = TwitterApiPipeline()
 
-    def get(self, request, year, month, day):
+    def get(self, request, year, month, day, query):
         appuser = request.user.appuser
         users_hashtags = appuser.followed_hashtags.all()
         users_profiles = appuser.followed_profiles.all()
@@ -26,7 +26,7 @@ class DateView(LoginRequiredMixin, View):
 
         trending_hashtags = Hashtag.objects.filter(appuser__isnull=True).filter(save_date=current_date).distinct()
 
-        if trending_hashtags and trending_hashtags != set():
+        if trending_hashtags:
             trending_hashtags_list = [trending_hashtag for trending_hashtag in trending_hashtags]
 
             trending_hashtags_list.sort(key=lambda hashtag: hashtag.tweet_volume, reverse=True)
@@ -36,7 +36,7 @@ class DateView(LoginRequiredMixin, View):
             trending_hashtags_chart = None
 
         if users_hashtags:
-            current_hashtag = users_hashtags[0]
+            current_hashtag = users_hashtags.filter(text=query)[0] if query[0] == '#' else users_hashtags[0]
 
             hashtags_tweets = current_hashtag.tweets.filter(save_date=current_date).distinct()
 
@@ -51,7 +51,7 @@ class DateView(LoginRequiredMixin, View):
             hashtags_tweets_chart = None
 
         if users_profiles:
-            current_profile = users_profiles[0]
+            current_profile = users_profiles.filter(username=query)[0] if query[0] != '#' else users_profiles[0]
 
             profiles_tweets = current_profile.tweet_set.filter(save_date=current_date).distinct()
 
@@ -78,6 +78,6 @@ class DateView(LoginRequiredMixin, View):
                                                                'profiles_tweets': profiles_tweets_list,
                                                                'profiles_tweets_chart': profiles_tweets_chart})
 
-    def post(self, request, year, month, day):
+    def post(self, request, year, month, day, query):
         handle_new_following(request, self.api_pipeline)
         return redirect('twitter_analyser:index')
