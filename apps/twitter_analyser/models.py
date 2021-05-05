@@ -27,6 +27,9 @@ class TwitterProfile(models.Model):
             return self.profile_id == other.profile_id or self.username == other.username
         return False
 
+    def __hash__(self):
+        return hash(self.username)
+
     class Meta:
         ordering = ['username', 'profile_id']
 
@@ -67,6 +70,9 @@ class Tweet(models.Model):
             return self.tweet_id == other.tweet_id or self.text == other.text
         return False
 
+    def __hash__(self):
+        return hash(self.text)
+
     class Meta:
         ordering = ['creation_date', 'save_date', 'tweet_id']
 
@@ -97,6 +103,9 @@ class Hashtag(models.Model):
         if isinstance(other, Hashtag):
             return self.text == other.text
         return False
+
+    def __hash__(self):
+        return hash(self.text)
 
     class Meta:
         ordering = ['save_date', 'text']

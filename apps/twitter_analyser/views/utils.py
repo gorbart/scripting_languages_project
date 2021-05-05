@@ -11,6 +11,7 @@ def handle_new_following(request, api_pipeline):
     :param request: POST request with search query
     :param api_pipeline: TwitterAPIPipeline instance, used for searching for Tweets, Hashtags and Profiles
     """
+
     hashtag_input = request.POST.get('hashtag_input')
     if hashtag_input:
         hashtags_tweets = api_pipeline.get_recent_tweets_for_hashtag(hashtag_input)

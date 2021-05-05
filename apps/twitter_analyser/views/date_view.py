@@ -7,7 +7,7 @@ from django.views import View
 from apps.twitter_analyser.models import Hashtag
 from apps.twitter_analyser.utils.plot_painter import PlotPainter
 from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
-from apps.twitter_analyser.views.utils import get_all_dates_for_user, handle_new_following
+from apps.twitter_analyser.views.utils import handle_new_following
 
 
 class DateView(LoginRequiredMixin, View):

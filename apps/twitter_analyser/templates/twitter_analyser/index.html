@@ -41,6 +41,9 @@
         </div>
     </div>
 </nav>
+
+<div class="row" style="height: 50px"></div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-2"></div>
@@ -75,6 +78,8 @@
         <div class="col-sm-2"></div>
     </div>
 
+    <div class="row" style="height: 50px"></div>
+
     <div class="row">
         <div class="col-5"></div>
         <div class="col-2">
@@ -102,7 +107,9 @@
                             <a href="/twitter_analyser/{{ current_date.year }}/{{ current_date.month }}/{{ current_date.day }}/%23{{ users_hashtag.text|slice:"1:" }}/">{{ users_hashtag.text }}</a>
                         </li>
                     {% else %}
-                        <li><a href="/twitter_analyser/%23{{ users_hashtag.text|slice:"1:" }}/">{{ users_hashtag.text }}</a></li>
+                        <li>
+                            <a href="/twitter_analyser/%23{{ users_hashtag.text|slice:"1:" }}/">{{ users_hashtag.text }}</a>
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -142,6 +149,8 @@
         <div class="col-sm-2"></div>
     </div>
 
+    <div class="row" style="height: 50px"></div>
+
     <div class="row">
         <div class="col-5"></div>
         <div class="col-2">
@@ -169,7 +178,8 @@
                             <a href="/twitter_analyser/{{ current_date.year }}/{{ current_date.month }}/{{ current_date.day }}/{{ users_profile.username }}/">{{ users_profile.username }}</a>
                         </li>
                     {% else %}
-                        <li><a href="/twitter_analyser/{{ users_profile.username }}/">{{ users_profile.username }}</a></li>
+                        <li><a href="/twitter_analyser/{{ users_profile.username }}/">{{ users_profile.username }}</a>
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -203,6 +213,47 @@
                     {% else %}
                         <p>No chart was provided.</p>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row" style="height: 50px"></div>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Followed hashtags
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for users_hashtag in users_hashtags %}
+                            <form action="/twitter_analyser/unfollow/hashtag/{{ users_hashtag.pk }}/" method="post">
+                                {% csrf_token %}
+                                <li>{{ users_hashtag.text }} <input type="submit" value="Unfollow"></li>
+                            </form>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-title text-center">
+                    Followed profiles
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for users_profile in users_profiles %}
+                            <form action="/twitter_analyser/unfollow/profile/{{ users_profile.pk }}/" method="post">
+                                {% csrf_token %}
+                                <li>{{ users_profile.username }} <input type="submit" value="Unfollow"></li>
+                            </form>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
