@@ -12,7 +12,7 @@ def unfollow_hashtag(request, pk):
     """
 
     if request.method == 'POST':
-        Hashtag.objects.get(pk=pk).delete()
+        request.user.appuser.hashtag_set.objects.get(pk=pk).delete()
     return redirect('twitter_analyser:index')
 
 
@@ -25,5 +25,5 @@ def unfollow_profile(request, pk):
     """
 
     if request.method == 'POST':
-        TwitterProfile.objects.get(pk=pk).delete()
+        request.user.appuser.twitterprofile_set.objects.get(pk=pk).delete()
     return redirect('twitter_analyser:index')

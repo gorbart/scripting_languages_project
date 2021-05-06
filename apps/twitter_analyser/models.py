@@ -1,5 +1,7 @@
 from django.db import models
 
+from apps.users.models import AppUser
+
 
 class TwitterProfile(models.Model):
     """
@@ -15,6 +17,7 @@ class TwitterProfile(models.Model):
     profile_id = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
     save_date = models.DateField()
+    appuser = models.ForeignKey(AppUser, on_delete=models.CASCADE)
 
     def __repr__(self):
         return f"Twitter profile {self.username} with id {self.profile_id}"
@@ -92,6 +95,7 @@ class Hashtag(models.Model):
     text = models.CharField(max_length=50)
     tweet_volume = models.IntegerField(blank=True, null=True)
     tweets = models.ManyToManyField(Tweet)
+    appuser = models.ForeignKey(AppUser, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __repr__(self):
         return f"{self.text} used by {self.tweet_volume} tweets"
