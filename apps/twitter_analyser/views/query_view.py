@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views import View
 
-from apps.twitter_analyser.models import Hashtag
-from apps.twitter_analyser.utils.plot_painter import PlotPainter
 from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
-from apps.twitter_analyser.views.utils import handle_new_following
+from apps.twitter_analyser.views.utils.get_utils import get_user_specifics, handle_trending_hashtags, \
+    handle_current_hashtag, handle_current_profile
+from apps.twitter_analyser.views.utils.post_utils import handle_new_following
 
 
 class QueryView(LoginRequiredMixin, View):
@@ -33,38 +33,15 @@ class QueryView(LoginRequiredMixin, View):
         alphabetically first), list of most popular posts related to it and chart presenting their statistics
         """
 
-        appuser = request.user.appuser
-        users_hashtags = appuser.followed_hashtags.all()
-        users_profiles = appuser.followed_profiles.all()
+        dates, trending_hashtags_from_db, users_hashtags, users_profiles = get_user_specifics(request)
 
-        trending_hashtags_from_db = Hashtag.objects.all()
-
-        dates = list(set([hashtag.save_date for hashtag in trending_hashtags_from_db]))
-
-        trending_hashtags = self.api_pipeline.get_top_hashtags_worldwide()
-        trending_hashtags.sort(key=lambda hashtag: hashtag.tweet_volume, reverse=True)
-        trending_hashtags_chart = PlotPainter.plot_hashtags(trending_hashtags)
-
-        for trending_hashtag in trending_hashtags:
-            if trending_hashtag not in trending_hashtags_from_db:
-                trending_hashtag.save()
+        trending_hashtags, trending_hashtags_chart = handle_trending_hashtags(self.api_pipeline,
+                                                                              trending_hashtags_from_db)
 
         if users_hashtags:
             current_hashtag = users_hashtags.filter(text=query)[0] if query[0] == '#' else users_hashtags[0]
 
-            current_hashtag_saved_tweets = current_hashtag.tweets.all()
-
-            hashtags_tweets = self.api_pipeline.get_recent_tweets_for_hashtag(current_hashtag.text, how_many=5)
-
-            for hashtags_tweet in hashtags_tweets:
-                if hashtags_tweet not in current_hashtag_saved_tweets:
-                    hashtags_tweet.save()
-                    current_hashtag.tweets.add(hashtags_tweet)
-
-            current_hashtag.save()
-
-            hashtags_tweets.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
-            hashtags_tweets_chart = PlotPainter.plot_tweets(hashtags_tweets)
+            hashtags_tweets, hashtags_tweets_chart = handle_current_hashtag(self.api_pipeline, current_hashtag)
         else:
             current_hashtag = None
             hashtags_tweets = None
@@ -73,19 +50,7 @@ class QueryView(LoginRequiredMixin, View):
         if users_profiles:
             current_profile = users_profiles.filter(username=query)[0] if query[0] != '#' else users_profiles[0]
 
-            current_profile_saved_tweets = current_profile.tweet_set.all()
-
-            profiles_tweets = self.api_pipeline.get_recent_tweets_for_author(current_profile.username, how_many=5)
-
-            for profiles_tweet in profiles_tweets:
-                if profiles_tweet not in current_profile_saved_tweets:
-                    profiles_tweet.save()
-                    current_profile.tweet_set.add(profiles_tweet)
-
-            current_profile.save()
-
-            profiles_tweets.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
-            profiles_tweets_chart = PlotPainter.plot_tweets(profiles_tweets)
+            profiles_tweets, profiles_tweets_chart = handle_current_profile(self.api_pipeline, current_profile)
         else:
             current_profile = None
             profiles_tweets = None

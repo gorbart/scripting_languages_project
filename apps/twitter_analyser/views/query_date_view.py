@@ -1,19 +1,17 @@
-import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 
-from apps.twitter_analyser.models import Hashtag
-from apps.twitter_analyser.utils.plot_painter import PlotPainter
 from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
-from apps.twitter_analyser.views.utils import handle_new_following
+from apps.twitter_analyser.views.utils.get_date_utils import get_user_specifics_for_date, \
+    handle_trending_hashtags_for_date, handle_hashtags_tweets_for_date, handle_profiles_tweets_for_date
+from apps.twitter_analyser.views.utils.post_utils import handle_new_following
 
 
 class QueryDateView(LoginRequiredMixin, View):
     """
-    QueryDateView class is used to handle rendering index page of Twitter Analyser with contents retrieved from database for
-    a given date related to a query which can be followed hashtag's text or followed profile's username.
+    QueryDateView class is used to handle rendering index page of Twitter Analyser with contents retrieved from database
+    for a given date related to a query which can be followed hashtag's text or followed profile's username.
     Attributes:
         - api_pipeline TwitterApiPipeline object with credentials assigned to this project
     """
@@ -38,37 +36,18 @@ class QueryDateView(LoginRequiredMixin, View):
         related to it and chart presenting their statistics
         """
 
-        appuser = request.user.appuser
-        users_hashtags = appuser.followed_hashtags.all()
-        users_profiles = appuser.followed_profiles.all()
+        current_date, dates, trending_hashtags, users_hashtags, users_profiles = get_user_specifics_for_date(day,
+                                                                                                             month,
+                                                                                                             year,
+                                                                                                             request)
 
-        trending_hashtags_from_db = Hashtag.objects.all()
-
-        dates = list(set([hashtag.save_date for hashtag in trending_hashtags_from_db]))
-
-        current_date = datetime.datetime(year, month, day)
-
-        trending_hashtags = Hashtag.objects.filter(appuser__isnull=True).filter(save_date=current_date).distinct()
-
-        if trending_hashtags:
-            trending_hashtags_list = [trending_hashtag for trending_hashtag in trending_hashtags]
-
-            trending_hashtags_list.sort(key=lambda hashtag: hashtag.tweet_volume, reverse=True)
-            trending_hashtags_chart = PlotPainter.plot_hashtags(trending_hashtags_list)
-        else:
-            trending_hashtags_list = None
-            trending_hashtags_chart = None
+        trending_hashtags_chart, trending_hashtags_list = handle_trending_hashtags_for_date(trending_hashtags)
 
         if users_hashtags:
             current_hashtag = users_hashtags.filter(text=query)[0] if query[0] == '#' else users_hashtags[0]
 
-            hashtags_tweets = current_hashtag.tweets.filter(save_date=current_date).distinct()
-
-            hashtags_tweets_list = [hashtags_tweet for hashtags_tweet in hashtags_tweets]
-
-            hashtags_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
-            hashtags_tweets_list = hashtags_tweets_list[:10]
-            hashtags_tweets_chart = PlotPainter.plot_tweets(hashtags_tweets_list)
+            hashtags_tweets_chart, hashtags_tweets_list = handle_hashtags_tweets_for_date(current_date,
+                                                                                          current_hashtag)
         else:
             current_hashtag = None
             hashtags_tweets_list = None
@@ -77,13 +56,8 @@ class QueryDateView(LoginRequiredMixin, View):
         if users_profiles:
             current_profile = users_profiles.filter(username=query)[0] if query[0] != '#' else users_profiles[0]
 
-            profiles_tweets = current_profile.tweet_set.filter(save_date=current_date).distinct()
-
-            profiles_tweets_list = [profiles_tweet for profiles_tweet in profiles_tweets]
-
-            profiles_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
-            profiles_tweets_list = profiles_tweets_list[:10]
-            profiles_tweets_chart = PlotPainter.plot_tweets(profiles_tweets_list)
+            profiles_tweets_chart, profiles_tweets_list = handle_profiles_tweets_for_date(current_date,
+                                                                                          current_profile)
         else:
             current_profile = None
             profiles_tweets_list = None

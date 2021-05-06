@@ -1,7 +1,5 @@
 from django.shortcuts import redirect
 
-from apps.twitter_analyser.models import Hashtag, TwitterProfile
-
 
 def unfollow_hashtag(request, pk):
     """
@@ -12,7 +10,7 @@ def unfollow_hashtag(request, pk):
     """
 
     if request.method == 'POST':
-        request.user.appuser.hashtag_set.objects.get(pk=pk).delete()
+        request.user.appuser.hashtag_set.get(pk=pk).delete()
     return redirect('twitter_analyser:index')
 
 
@@ -25,5 +23,5 @@ def unfollow_profile(request, pk):
     """
 
     if request.method == 'POST':
-        request.user.appuser.twitterprofile_set.objects.get(pk=pk).delete()
+        request.user.appuser.twitterprofile_set.get(pk=pk).delete()
     return redirect('twitter_analyser:index')
