@@ -74,5 +74,5 @@ class IndexView(LoginRequiredMixin, View):
         :return: redirection to index page
         """
 
-        handle_new_following(request, self.api_pipeline)
-        return redirect('twitter_analyser:index')
+        user_input = handle_new_following(request, self.api_pipeline)
+        return redirect(f'/twitter_analyser/{user_input}')
