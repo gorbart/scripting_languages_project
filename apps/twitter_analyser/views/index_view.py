@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 
+from apps.twitter_analyser.utils.email_report_sender import EmailReportSender
 from apps.twitter_analyser.utils.twitter_api_pipeline import TwitterApiPipeline
 from apps.twitter_analyser.views.utils.get_utils import get_user_specifics, handle_trending_hashtags, \
     handle_current_hashtag, handle_current_profile
@@ -54,18 +55,24 @@ class IndexView(LoginRequiredMixin, View):
             profiles_tweets = None
             profiles_tweets_chart = None
 
-        return render(request, 'twitter_analyser/index.html', {'current_date': None,
-                                                               'dates': dates,
-                                                               'trending_hashtags': trending_hashtags,
-                                                               'trending_hashtags_chart': trending_hashtags_chart,
-                                                               'users_hashtags': users_hashtags,
-                                                               'users_profiles': users_profiles,
-                                                               'current_hashtag': current_hashtag,
-                                                               'hashtags_tweets': hashtags_tweets,
-                                                               'hashtags_tweets_chart': hashtags_tweets_chart,
-                                                               'current_profile': current_profile,
-                                                               'profiles_tweets': profiles_tweets,
-                                                               'profiles_tweets_chart': profiles_tweets_chart})
+        context = {'user': request.user,
+                   'current_date': None,
+                   'dates': dates,
+                   'trending_hashtags': trending_hashtags,
+                   'trending_hashtags_chart': trending_hashtags_chart,
+                   'users_hashtags': users_hashtags,
+                   'users_profiles': users_profiles,
+                   'current_hashtag': current_hashtag,
+                   'hashtags_tweets': hashtags_tweets,
+                   'hashtags_tweets_chart': hashtags_tweets_chart,
+                   'current_profile': current_profile,
+                   'profiles_tweets': profiles_tweets,
+                   'profiles_tweets_chart': profiles_tweets_chart}
+
+        if request.GET.get('report_btn'):
+            EmailReportSender.send_report(context)
+
+        return render(request, 'twitter_analyser/index.html', context)
 
     def post(self, request):
         """

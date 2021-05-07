@@ -1,3 +1,5 @@
+import datetime
+
 from django.core.mail import EmailMessage
 from django.template import loader
 
@@ -20,6 +22,11 @@ class EmailReportSender:
         :param subject: subject of email - default is "Report for {} concerning {}" with two empty spaces to format in
         user's username and date, for which the report is generated
         """
+
+        if not context['current_date']:
+            context['current_date'] = datetime.datetime.now().date()
+        else:
+            context['current_date'] = context['current_date'].date()
 
         subject_final = subject.format(context['user'].username, context['current_date'])
         message_final = loader.render_to_string(message_path, context)

@@ -17,8 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
+from scripting_languages_project.views import main_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^$', main_view, name='main'),
     url('users/', include('apps.users.urls')),
     url('twitter_analyser/', include('apps.twitter_analyser.urls')),
 ]

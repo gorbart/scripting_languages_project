@@ -61,7 +61,7 @@ def handle_hashtags_tweets_for_date(current_date, current_hashtag):
     hashtags_tweets_list = [hashtags_tweet for hashtags_tweet in hashtags_tweets]
     hashtags_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
     hashtags_tweets_list = hashtags_tweets_list[:10]
-    hashtags_tweets_chart = PlotPainter.plot_tweets(hashtags_tweets_list)
+    hashtags_tweets_chart = PlotPainter.plot_tweets(hashtags_tweets_list) if hashtags_tweets else None
     return hashtags_tweets_chart, hashtags_tweets_list
 
 
@@ -79,5 +79,5 @@ def handle_profiles_tweets_for_date(current_date, current_profile):
     profiles_tweets_list = [hashtags_tweet for hashtags_tweet in profiles_tweets]
     profiles_tweets_list.sort(key=lambda tweet: (tweet.retweets, tweet.likes), reverse=True)
     profiles_tweets_list = profiles_tweets_list[:10]
-    profiles_tweets_chart = PlotPainter.plot_tweets(profiles_tweets_list)
+    profiles_tweets_chart = PlotPainter.plot_tweets(profiles_tweets_list) if profiles_tweets else None
     return profiles_tweets_chart, profiles_tweets_list
