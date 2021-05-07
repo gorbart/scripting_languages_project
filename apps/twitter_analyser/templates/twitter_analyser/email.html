@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Report</title>
+</head>
+<body>
+<h1>Report for {{ user.username }} concerning {{ current_date }}</h1>
+<div>
+    Most trending hashtags in the world
+</div>
+<div>
+    <ul>
+        {% for trending_hashtag in trending_hashtags %}
+            <li>{{ trending_hashtag }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    Most popular Tweets for {{ current_hashtag.text }}
+</div>
+<div>
+    <ul>
+        {% for hashtags_tweet in hashtags_tweets %}
+            <li>{{ hashtags_tweet }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    Most popular Tweets for {{ current_profile.text }}
+</div>
+<div>
+    <ul>
+        {% for profiles_tweet in profiles_tweets %}
+            <li>{{ profiles_tweet }}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
