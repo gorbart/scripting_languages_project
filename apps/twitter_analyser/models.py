@@ -11,7 +11,7 @@ class TwitterProfile(models.Model):
         - username - username connected with profile on Twitter
         - save_date - indicates when this TwitterProfile has been saved to database
     TwitterProfile is in relationships with Tweet (One-To-Many as each Tweet has only one author) and AppUser
-    (Many-To-Many as every project user may follow several TwitterProfiles and they can be followed by several users).
+    (One-To-Many as every project user may follow several TwitterProfiles).
     """
 
     profile_id = models.CharField(max_length=30)
@@ -57,7 +57,7 @@ class Tweet(models.Model):
     text = models.CharField(max_length=500)
     retweets = models.IntegerField()
     likes = models.IntegerField()
-    author = models.ForeignKey(TwitterProfile, blank=True, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(TwitterProfile, blank=True, null=True, on_delete=models.CASCADE)
 
     def __repr__(self):
         res_str = f"{self.text}. Posted on {self.creation_date}"
@@ -88,7 +88,7 @@ class Hashtag(models.Model):
         - text - Hashtag's text
         - tweet_volume - integer indicating how many times was this Hashtag used
     Hashtag is in relationships with Tweet (Many-To-Many as every Tweet may have several Hashtags and they can be
-    related to by several Tweets).
+    related to by several Tweets) and Appuser (One-To-Many as every project user may follow several Hashtags).
     """
 
     save_date = models.DateField()

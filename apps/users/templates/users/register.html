@@ -26,11 +26,9 @@
             <div class="row justify-content-center" style="width: 400px">
                 <form enctype="multipart/form-data" method="POST">
                     {% if user_form.errors %}
-                        <ul class="errorlist">
-                            {% for key, error in user_form.errors.items %}
-                                <li><strong>{{ error|escape }}</strong></li>
-                            {% endfor %}
-                        </ul>
+                        {% for key, error in user_form.errors.items %}
+                            <strong>{{ error|escape }}</strong>
+                        {% endfor %}
                     {% else %}
                         <div style="height: 50px"></div>
                     {% endif %}
