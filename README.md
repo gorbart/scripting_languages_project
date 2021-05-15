@@ -26,4 +26,6 @@ $ python manage.py makemigrations users <br>
 $ python manage.py makemigrations twitter_analyser <br>
 $ python manage.py migrate - these commands migrate entities
 to your database <br>
-$ python manage.py runserver - runs whole project
+$ python manage.py runserver - runs whole project<br><br>
+
+Documentation homepage is at docs/_build/html/index.html
