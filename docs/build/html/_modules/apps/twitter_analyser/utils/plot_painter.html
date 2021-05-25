@@ -1,0 +1,126 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.twitter_analyser.utils.plot_painter &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils.plot_painter</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.twitter_analyser.utils.plot_painter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="PlotPainter"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.plot_painter.PlotPainter">[docs]</a><span class="k">class</span> <span class="nc">PlotPainter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class PlotPainter is used to plot data associated with Tweets and Hashtags; the plots will be rendered at view pages</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PlotPainter.plot_tweets"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_tweets">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">plot_tweets</span><span class="p">(</span><span class="n">tweet_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        plot_tweets produces bar plots of retweet and like numbers contained in Tweet objects</span>
+<span class="sd">        :param tweet_list: list of Tweet objects</span>
+<span class="sd">        :return: bar plot of Tweet continuous attributes as a HTML code in str object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">tweet_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;retweets&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">tweet</span><span class="o">.</span><span class="n">retweets</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweet_list</span><span class="p">],</span>
+                                 <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">tweet</span><span class="o">.</span><span class="n">likes</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweet_list</span><span class="p">]},</span>
+                                <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()[:</span><span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweet_list</span><span class="p">])</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">tweet_df</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Tweet&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;metric&#39;</span><span class="p">},</span>
+                     <span class="n">hover_name</span><span class="o">=</span><span class="n">tweet_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fig</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PlotPainter.plot_hashtags"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_hashtags">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">plot_hashtags</span><span class="p">(</span><span class="n">hashtag_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        plot_hashtags produces bar plots of tweet_volume numbers contained in Hashtag objects</span>
+<span class="sd">        :param hashtag_list: list of Hashtag objects</span>
+<span class="sd">        :return: bar plot of Hashtag continuous attributes as a HTML code in str object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">hashtag_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;tweet_volume&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">hashtag</span><span class="o">.</span><span class="n">tweet_volume</span> <span class="k">for</span> <span class="n">hashtag</span> <span class="ow">in</span> <span class="n">hashtag_list</span><span class="p">]},</span>
+                                  <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">hashtag</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">hashtag</span> <span class="ow">in</span> <span class="n">hashtag_list</span><span class="p">])</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">hashtag_df</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Hashtag&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;metric&#39;</span><span class="p">},</span>
+                     <span class="n">hover_name</span><span class="o">=</span><span class="n">hashtag_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span></div></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils.plot_painter</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

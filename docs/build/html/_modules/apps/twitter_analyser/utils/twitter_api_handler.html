@@ -1,0 +1,169 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.twitter_analyser.utils.twitter_api_handler &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils.twitter_api_handler</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.twitter_analyser.utils.twitter_api_handler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tweepy</span>
+
+<span class="n">POLAND_WOEID</span> <span class="o">=</span> <span class="mi">23424923</span>
+
+
+<div class="viewcode-block" id="TwitterApiHandler"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler">[docs]</a><span class="k">class</span> <span class="nc">TwitterApiHandler</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class TwitterApiHandler connects to Twitter API and retrieves from there information requested by project&#39;s user.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        - auth - authorisation object, created with Twitter API key and secret given in __init__</span>
+<span class="sd">        - api - api connection object, created with auth object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">AppAuthHandler</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TwitterApiHandler.get_trending_hashtags"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags">[docs]</a>    <span class="k">def</span> <span class="nf">get_trending_hashtags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">how_many</span><span class="p">,</span> <span class="n">woeid</span><span class="o">=</span><span class="n">POLAND_WOEID</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for getting a list of hashtags for a specific location</span>
+<span class="sd">        :param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them</span>
+<span class="sd">        are hashtags)</span>
+<span class="sd">        :param woeid: Yahoo Where On Earth IDentifier indicating geographical location of retrieved trends; default</span>
+<span class="sd">        value is Poland&#39;s WOEID as current project is going to use it frequently</span>
+<span class="sd">        :return: list of dictionaries with format {&#39;text&#39;: hashtags&#39; text, &#39;volume&#39;: number of hashtag&#39;s related Tweets</span>
+<span class="sd">        for specified country}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">trend</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;tweet_volume&#39;</span><span class="p">:</span> <span class="n">trend</span><span class="p">[</span><span class="s1">&#39;tweet_volume&#39;</span><span class="p">]}</span>
+                <span class="k">for</span> <span class="n">trend</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">trends_place</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">woeid</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;trends&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">trend</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span> <span class="ow">and</span> <span class="n">trend</span><span class="p">[</span><span class="s1">&#39;tweet_volume&#39;</span><span class="p">]][:</span><span class="n">how_many</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TwitterApiHandler.get_trending_hashtags_for_world"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags_for_world">[docs]</a>    <span class="k">def</span> <span class="nf">get_trending_hashtags_for_world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">how_many</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for getting a list of hashtags for the entire world</span>
+<span class="sd">        :param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them</span>
+<span class="sd">        are hashtags)</span>
+<span class="sd">        :return: list of dictionaries with format hashtags&#39; text and number of hashtag&#39;s related Tweets for the entire</span>
+<span class="sd">        world</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trending_hashtags</span><span class="p">(</span><span class="n">how_many</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TwitterApiHandler.get_tweets_with_hashtag"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_with_hashtag">[docs]</a>    <span class="k">def</span> <span class="nf">get_tweets_with_hashtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">how_many</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for getting a list of Tweets for a given hashtag</span>
+<span class="sd">        :param query: string query used for searching matching posts - hashtags</span>
+<span class="sd">        :param how_many: indicates how many Tweets should be iterated over</span>
+<span class="sd">        :return: list of dictionaries with tweet&#39;s id, its creation date, text and numbers of retweets and likes, which</span>
+<span class="sd">        is 5 times bigger than how_many as some tweets may be retweets of each other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;tweet_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="s1">&#39;creation_date&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span>
+                 <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">full_text</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tweet</span><span class="p">,</span> <span class="s1">&#39;retweeted_status&#39;</span><span class="p">)</span>
+                 <span class="k">else</span> <span class="n">tweet</span><span class="o">.</span><span class="n">retweeted_status</span><span class="o">.</span><span class="n">full_text</span><span class="p">,</span>
+                 <span class="s1">&#39;retweets&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">}</span> <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span>
+                <span class="n">tweepy</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">tweet_mode</span><span class="o">=</span><span class="s2">&quot;extended&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">how_many</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="TwitterApiHandler.get_tweets_for_author"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_for_author">[docs]</a>    <span class="k">def</span> <span class="nf">get_tweets_for_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">how_many</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for getting a list of Tweets posted by given user</span>
+<span class="sd">        :param author: query used for searching matching posts - author&#39;s username</span>
+<span class="sd">        :param how_many: indicates how many Tweets should be iterated over</span>
+<span class="sd">        :return: list of dictionaries with tweet&#39;s id, its creation date, text and numbers of retweets and likes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;tweet_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="s1">&#39;creation_date&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span>
+                 <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;retweets&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="s1">&#39;likes&#39;</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">user_timeline</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">author</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">how_many</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="TwitterApiHandler.get_profile"><a class="viewcode-back" href="../../../../apps.twitter_analyser.utils.html#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_profile">[docs]</a>    <span class="k">def</span> <span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for getting specified Twitter&#39;s profile</span>
+<span class="sd">        :param query: profile&#39;s username or id</span>
+<span class="sd">        :return: dictionary of username and id of the most matching profile</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">lookup_users</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">lookup_users</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">query</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">profile</span><span class="o">.</span><span class="n">screen_name</span><span class="p">}</span></div></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils.twitter_api_handler</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

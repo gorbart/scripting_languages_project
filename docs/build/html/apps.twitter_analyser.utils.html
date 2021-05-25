@@ -1,0 +1,365 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>apps.twitter_analyser.utils package &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apps.twitter_analyser.views package" href="apps.twitter_analyser.views.html" />
+    <link rel="prev" title="apps.twitter_analyser.tests.utils package" href="apps.twitter_analyser.tests.utils.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.html" title="apps.twitter_analyser.views package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.tests.utils.html" title="apps.twitter_analyser.tests.utils package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" accesskey="U">apps.twitter_analyser package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="apps-twitter-analyser-utils-package">
+<h1>apps.twitter_analyser.utils package<a class="headerlink" href="#apps-twitter-analyser-utils-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-apps.twitter_analyser.utils.dict_model_converter">
+<span id="apps-twitter-analyser-utils-dict-model-converter-module"></span><h2>apps.twitter_analyser.utils.dict_model_converter module<a class="headerlink" href="#module-apps.twitter_analyser.utils.dict_model_converter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.utils.dict_model_converter.</span></span><span class="sig-name descname"><span class="pre">DictModelConverter</span></span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class DictModelConverter’s (static) methods take dictionaries of attributes of model classes and return almost
+complete objects of these classes (built objects don’t have objects in relationships for now)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_hashtag_from_dict">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_hashtag_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hashtag_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter.get_hashtag_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_hashtag_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting Hashtag class objects from dictionaries of class’s attributes
+:param hashtag_dict: dictionary of format {‘text’: str, ‘tweet_volume’: int}
+:return: Hashtag object with attributes like in dictionary above and a save date which is current time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_hashtag_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_hashtag_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hashtag_dict_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter.get_hashtag_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_hashtag_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting Hashtag class objects’ list from list of dictionaries of class’s attributes
+:param hashtag_dict_list: list of dictionaries of format {‘text’: str, ‘tweet_volume’: int}
+:return: list of Hashtag objects with attributes like in dictionary above and a save date which is current time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_profile_from_dict">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_profile_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter.get_profile_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_profile_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting TwitterProfile class objects from dictionaries of its attributes
+:param profile_dict: dictionary of format {‘profile_id’: int, ‘username’: str}
+:return: TwitterProfile object with attributes above and a save date which is current time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_tweet_from_dict">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_tweet_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tweet_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter.get_tweet_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_tweet_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting Tweet class objects from dictionaries of class’s attributes
+:param tweet_dict: dictionary of format {‘tweet_id’: int, ‘creation_date’: date, ‘text’: str,
+‘retweets’: int, ‘likes’: int}
+:return: Tweet object with attributes above and a save date which is current time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_tweets_list">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_tweets_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tweet_dict_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how_many</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/dict_model_converter.html#DictModelConverter.get_tweets_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.dict_model_converter.DictModelConverter.get_tweets_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting Tweet class objects’ list from list of dictionaries of class’s attributes
+:param how_many: how many Tweet object should be in the resulting list as tweet_dict_list doesn’t provide unique
+elements
+:param tweet_dict_list: list of dictionaries of format {‘tweet_id’: int, ‘creation_date’: date, ‘text’: str,
+‘retweets’: int, ‘likes’: int}
+:return: list of Tweet objects with attributes like in dictionary above and a save date which is current time</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.utils.email_report_sender">
+<span id="apps-twitter-analyser-utils-email-report-sender-module"></span><h2>apps.twitter_analyser.utils.email_report_sender module<a class="headerlink" href="#module-apps.twitter_analyser.utils.email_report_sender" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.email_report_sender.EmailReportSender">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.utils.email_report_sender.</span></span><span class="sig-name descname"><span class="pre">EmailReportSender</span></span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/email_report_sender.html#EmailReportSender"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.email_report_sender.EmailReportSender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>EmailReportSender is used for sending reports about current webapp state (currently displayed most popular hashtags
+in the world and most popular tweets for given hashtag and profile).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.email_report_sender.EmailReportSender.send_report">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">send_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'twitter_analyser/email.html'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Report</span> <span class="pre">for</span> <span class="pre">{}</span> <span class="pre">concerning</span> <span class="pre">{}'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/email_report_sender.html#EmailReportSender.send_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.email_report_sender.EmailReportSender.send_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>send_report uses Django SMTP mailing to send email to a given app user containing currently displayed most
+popular hashtags in the world and most popular tweets for given hashtag and profile
+:param context: dictionary containing current webpage context - variables needed to prepare email template for
+sending: user (passed to template but also giving receiver email address), trending hashtags, current date,
+current hashtag, hashtags tweets, current profile and profiles tweets
+:param message_path: path to email HTML template - default is “twitter_analyser/email.html”
+:param subject: subject of email - default is “Report for {} concerning {}” with two empty spaces to format in
+user’s username and date, for which the report is generated</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.utils.plot_painter">
+<span id="apps-twitter-analyser-utils-plot-painter-module"></span><h2>apps.twitter_analyser.utils.plot_painter module<a class="headerlink" href="#module-apps.twitter_analyser.utils.plot_painter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.plot_painter.PlotPainter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.utils.plot_painter.</span></span><span class="sig-name descname"><span class="pre">PlotPainter</span></span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/plot_painter.html#PlotPainter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.plot_painter.PlotPainter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class PlotPainter is used to plot data associated with Tweets and Hashtags; the plots will be rendered at view pages</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_hashtags">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">plot_hashtags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hashtag_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/plot_painter.html#PlotPainter.plot_hashtags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_hashtags" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot_hashtags produces bar plots of tweet_volume numbers contained in Hashtag objects
+:param hashtag_list: list of Hashtag objects
+:return: bar plot of Hashtag continuous attributes as a HTML code in str object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_tweets">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">plot_tweets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tweet_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/plot_painter.html#PlotPainter.plot_tweets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.plot_painter.PlotPainter.plot_tweets" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot_tweets produces bar plots of retweet and like numbers contained in Tweet objects
+:param tweet_list: list of Tweet objects
+:return: bar plot of Tweet continuous attributes as a HTML code in str object</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.utils.twitter_api_handler">
+<span id="apps-twitter-analyser-utils-twitter-api-handler-module"></span><h2>apps.twitter_analyser.utils.twitter_api_handler module<a class="headerlink" href="#module-apps.twitter_analyser.utils.twitter_api_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.utils.twitter_api_handler.</span></span><span class="sig-name descname"><span class="pre">TwitterApiHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class TwitterApiHandler connects to Twitter API and retrieves from there information requested by project’s user.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>auth - authorisation object, created with Twitter API key and secret given in __init__</p></li>
+<li><p>api - api connection object, created with auth object</p></li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_profile">
+<span class="sig-name descname"><span class="pre">get_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler.get_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting specified Twitter’s profile
+:param query: profile’s username or id
+:return: dictionary of username and id of the most matching profile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags">
+<span class="sig-name descname"><span class="pre">get_trending_hashtags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">how_many</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">woeid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23424923</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler.get_trending_hashtags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting a list of hashtags for a specific location
+:param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them
+are hashtags)
+:param woeid: Yahoo Where On Earth IDentifier indicating geographical location of retrieved trends; default
+value is Poland’s WOEID as current project is going to use it frequently
+:return: list of dictionaries with format {‘text’: hashtags’ text, ‘volume’: number of hashtag’s related Tweets
+for specified country}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags_for_world">
+<span class="sig-name descname"><span class="pre">get_trending_hashtags_for_world</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">how_many</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler.get_trending_hashtags_for_world"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_trending_hashtags_for_world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting a list of hashtags for the entire world
+:param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them
+are hashtags)
+:return: list of dictionaries with format hashtags’ text and number of hashtag’s related Tweets for the entire
+world</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_for_author">
+<span class="sig-name descname"><span class="pre">get_tweets_for_author</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">author</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how_many</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler.get_tweets_for_author"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_for_author" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting a list of Tweets posted by given user
+:param author: query used for searching matching posts - author’s username
+:param how_many: indicates how many Tweets should be iterated over
+:return: list of dictionaries with tweet’s id, its creation date, text and numbers of retweets and likes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_with_hashtag">
+<span class="sig-name descname"><span class="pre">get_tweets_with_hashtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how_many</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_handler.html#TwitterApiHandler.get_tweets_with_hashtag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_handler.TwitterApiHandler.get_tweets_with_hashtag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting a list of Tweets for a given hashtag
+:param query: string query used for searching matching posts - hashtags
+:param how_many: indicates how many Tweets should be iterated over
+:return: list of dictionaries with tweet’s id, its creation date, text and numbers of retweets and likes, which
+is 5 times bigger than how_many as some tweets may be retweets of each other</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.utils.twitter_api_pipeline">
+<span id="apps-twitter-analyser-utils-twitter-api-pipeline-module"></span><h2>apps.twitter_analyser.utils.twitter_api_pipeline module<a class="headerlink" href="#module-apps.twitter_analyser.utils.twitter_api_pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.utils.twitter_api_pipeline.</span></span><span class="sig-name descname"><span class="pre">TwitterApiPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0vlv3wBareGiiMKoYSvNweDwm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Ilbx59mBsvAN4rv7Rtz22CG0cjJlIMRx5mxsAVKxiV7fcjmEsb'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_pipeline.html#TwitterApiPipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TwitterApiPipeline class is created to make getting Twitter-related objects easier so that they can be ready to use
+just after get requests.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>api_handler - TwitterApiHandler class instance, created for use of getting models from Twitter API with</p></li>
+</ul>
+<p>generated key and secret</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_recent_tweets_for_author">
+<span class="sig-name descname"><span class="pre">get_recent_tweets_for_author</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">author</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how_many</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_pipeline.html#TwitterApiPipeline.get_recent_tweets_for_author"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_recent_tweets_for_author" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting most recent and popular tweets posted by user with specified username or id
+:param author: string query used for searching matching posts - author profile’s username or id
+:param how_many: specifies number of retrieved Tweets
+:return: list of Tweet objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_recent_tweets_for_hashtag">
+<span class="sig-name descname"><span class="pre">get_recent_tweets_for_hashtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hashtag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how_many</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_pipeline.html#TwitterApiPipeline.get_recent_tweets_for_hashtag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_recent_tweets_for_hashtag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting most recent and popular tweets with specified hashtag
+:param hashtag: string query used for searching matching posts - hashtags
+:param how_many: specifies number of retrieved Tweets
+:return: list of Tweet objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_top_hashtags_worldwide">
+<span class="sig-name descname"><span class="pre">get_top_hashtags_worldwide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">how_many</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_pipeline.html#TwitterApiPipeline.get_top_hashtags_worldwide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_top_hashtags_worldwide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting trending in the entire world hashtag object instances straight from Twitter API
+:param how_many: specifies number of retrieved hashtags (may be less as there is 50 trends and not all of them
+are hashtags)
+:return: list of Hashtag objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_twitter_profile">
+<span class="sig-name descname"><span class="pre">get_twitter_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/utils/twitter_api_pipeline.html#TwitterApiPipeline.get_twitter_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline.get_twitter_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method for getting Twitter user Profile by his username or id
+:param query: string query used for searching matching Profile - username or id
+:return: list of Profile objects</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apps.twitter_analyser.utils" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apps.twitter_analyser.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils.dict_model_converter">apps.twitter_analyser.utils.dict_model_converter module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils.email_report_sender">apps.twitter_analyser.utils.email_report_sender module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils.plot_painter">apps.twitter_analyser.utils.plot_painter module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils.twitter_api_handler">apps.twitter_analyser.utils.twitter_api_handler module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils.twitter_api_pipeline">apps.twitter_analyser.utils.twitter_api_pipeline module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apps.twitter_analyser.tests.utils.html"
+                        title="previous chapter">apps.twitter_analyser.tests.utils package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apps.twitter_analyser.views.html"
+                        title="next chapter">apps.twitter_analyser.views package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/apps.twitter_analyser.utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.html" title="apps.twitter_analyser.views package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.tests.utils.html" title="apps.twitter_analyser.tests.utils package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" >apps.twitter_analyser package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.utils package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

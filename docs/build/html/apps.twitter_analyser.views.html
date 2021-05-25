@@ -1,0 +1,372 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>apps.twitter_analyser.views package &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apps.twitter_analyser.views.utils package" href="apps.twitter_analyser.views.utils.html" />
+    <link rel="prev" title="apps.twitter_analyser.utils package" href="apps.twitter_analyser.utils.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.utils.html" title="apps.twitter_analyser.views.utils package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.utils.html" title="apps.twitter_analyser.utils package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" accesskey="U">apps.twitter_analyser package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="apps-twitter-analyser-views-package">
+<h1>apps.twitter_analyser.views package<a class="headerlink" href="#apps-twitter-analyser-views-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apps.twitter_analyser.views.utils.html">apps.twitter_analyser.views.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apps.twitter_analyser.views.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.twitter_analyser.views.utils.html#module-apps.twitter_analyser.views.utils.get_date_utils">apps.twitter_analyser.views.utils.get_date_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.twitter_analyser.views.utils.html#module-apps.twitter_analyser.views.utils.get_utils">apps.twitter_analyser.views.utils.get_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.twitter_analyser.views.utils.html#module-apps.twitter_analyser.views.utils.post_utils">apps.twitter_analyser.views.utils.post_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apps.twitter_analyser.views.utils.html#module-apps.twitter_analyser.views.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-apps.twitter_analyser.views.date_view">
+<span id="apps-twitter-analyser-views-date-view-module"></span><h2>apps.twitter_analyser.views.date_view module<a class="headerlink" href="#module-apps.twitter_analyser.views.date_view" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.date_view.DateView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.date_view.</span></span><span class="sig-name descname"><span class="pre">DateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/date_view.html#DateView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.date_view.DateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.mixins.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
+<p>DateView class is used to handle rendering index page of Twitter Analyser with contents retrieved from database
+saved on a given date.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>api_pipeline TwitterApiPipeline object with credentials assigned to this project</p></li>
+</ul>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.date_view.DateView.api_pipeline">
+<span class="sig-name descname"><span class="pre">api_pipeline</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apps.twitter_analyser.views.date_view.DateView.api_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.date_view.DateView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/date_view.html#DateView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.date_view.DateView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>get method renders index.html with contents retrieved from database related to the first alphabetically Hashtag
+and TwitterProfile instances and saved on given date.
+:param day: day of searched date
+:param month: month of searched date
+:param year: year of searched date
+:param request: GET request
+:return: rendered index.html page with dictionary containing current date (here year/month/date parameters),
+list of dates records have been saved in database, list of trending in the world hashtags on given day,
+chart presenting their popularity, lists of hashtags and Twitter profiles followed by user, current hashtag
+(alphabetically first), list of most popular posts related to it, chart presenting their
+statistics, current profile (alphabetically first), list of most popular posts
+related to it and chart presenting their statistics</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.date_view.DateView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/date_view.html#DateView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.date_view.DateView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>post method is used to follow new hashtags and profiles
+:param day: day in view’s url; ignored here
+:param month: month in view’s url; ignored here
+:param year: year in view’s url; ignored here
+:param request: POST request with demanded hashtag or profile username
+:return: redirection to index page</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.index_view">
+<span id="apps-twitter-analyser-views-index-view-module"></span><h2>apps.twitter_analyser.views.index_view module<a class="headerlink" href="#module-apps.twitter_analyser.views.index_view" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.index_view.IndexView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.index_view.</span></span><span class="sig-name descname"><span class="pre">IndexView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/index_view.html#IndexView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.index_view.IndexView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.mixins.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
+<p>IndexView class is used to handle rendering index page of Twitter Analyser with contents retrieved from Twitter API.
+It also saves the contents in database.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>api_pipeline TwitterApiPipeline object with credentials assigned to this project</p></li>
+</ul>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.index_view.IndexView.api_pipeline">
+<span class="sig-name descname"><span class="pre">api_pipeline</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apps.twitter_analyser.views.index_view.IndexView.api_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.index_view.IndexView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/index_view.html#IndexView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.index_view.IndexView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>get method renders index.html with contents retrieved from Twitter API and default (first alphabetically)
+followed Hashtag and TwitterProfile instances.
+:param request: GET request
+:return: rendered index.html page with dictionary containing current date (here None as we don’t retrieve
+anything from database; only from Twitter API), list of dates application has been used, list of trending in the
+world hashtags retrieved from Twitter API, chart presenting their popularity, lists of hashtags and Twitter
+profiles followed by user, current hashtag (first alphabetically), list of most popular posts related to it,
+chart presenting their statistics, current profile (first alphabetically), list of most popular posts related to
+it and chart presenting their statistics</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.index_view.IndexView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/index_view.html#IndexView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.index_view.IndexView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>post method is used to follow new hashtags and profiles
+:param request: POST request with demanded hashtag or profile username
+:return: redirection to index page</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.query_date_view">
+<span id="apps-twitter-analyser-views-query-date-view-module"></span><h2>apps.twitter_analyser.views.query_date_view module<a class="headerlink" href="#module-apps.twitter_analyser.views.query_date_view" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_date_view.QueryDateView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.query_date_view.</span></span><span class="sig-name descname"><span class="pre">QueryDateView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_date_view.html#QueryDateView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_date_view.QueryDateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.mixins.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
+<p>QueryDateView class is used to handle rendering index page of Twitter Analyser with contents retrieved from database
+for a given date related to a query which can be followed hashtag’s text or followed profile’s username.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>api_pipeline TwitterApiPipeline object with credentials assigned to this project</p></li>
+</ul>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_date_view.QueryDateView.api_pipeline">
+<span class="sig-name descname"><span class="pre">api_pipeline</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apps.twitter_analyser.views.query_date_view.QueryDateView.api_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_date_view.QueryDateView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_date_view.html#QueryDateView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_date_view.QueryDateView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>get method renders index.html with contents retrieved from database related to followed Hashtag and
+TwitterProfile instances chosen by passing hashtag’s text or profile’s username (if there is hashtag text passed
+- Profile is the first one alphabetically and vice versa) and saved on given date.
+:param day: day of searched date
+:param month: month of searched date
+:param year: year of searched date
+:param query: hashtag text or profile’s username
+:param request: GET request
+:return: rendered index.html page with dictionary containing current date (here year/month/date parameters),
+list of dates application has been used, list of trending in the world hashtags retrieved from Twitter API,
+chart presenting their popularity, lists of hashtags and Twitter profiles followed by user, current hashtag (may
+be from query, otherwise alphabetically first), list of most popular posts related to it, chart presenting their
+statistics, current profile (may be from query, otherwise alphabetically first), list of most popular posts
+related to it and chart presenting their statistics</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_date_view.QueryDateView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_date_view.html#QueryDateView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_date_view.QueryDateView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>post method is used to follow new hashtags and profiles
+:param query: query in view’s url; ignored here
+:param day: day in view’s url; ignored here
+:param month: month in view’s url; ignored here
+:param year: year in view’s url; ignored here
+:param request: POST request with demanded hashtag or profile username
+:return: redirection to index page</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.query_view">
+<span id="apps-twitter-analyser-views-query-view-module"></span><h2>apps.twitter_analyser.views.query_view module<a class="headerlink" href="#module-apps.twitter_analyser.views.query_view" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_view.QueryView">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.query_view.</span></span><span class="sig-name descname"><span class="pre">QueryView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_view.html#QueryView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_view.QueryView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.mixins.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
+<p>QueryView class is used to handle rendering index page of Twitter Analyser with contents retrieved from Twitter API
+related to a query which can be followed hashtag’s text or followed profile’s username.
+Attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>api_pipeline TwitterApiPipeline object with credentials assigned to this project</p></li>
+</ul>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_view.QueryView.api_pipeline">
+<span class="sig-name descname"><span class="pre">api_pipeline</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&lt;apps.twitter_analyser.utils.twitter_api_pipeline.TwitterApiPipeline</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apps.twitter_analyser.views.query_view.QueryView.api_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_view.QueryView.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_view.html#QueryView.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_view.QueryView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>get method renders index.html with contents retrieved from Twitter API related to followed Hashtag and
+TwitterProfile instances chosen by passing hashtag’s text or profile’s username (if there is hashtag text passed
+- Profile is the first one alphabetically and vice versa). It also saves the contents in database.
+:param query: hashtag text or profile’s username
+:param request: GET request
+:return: rendered index.html page with dictionary containing current date (here None as we don’t retrieve
+anything from database; only from Twitter API), list of dates application has been used, list of trending in the
+world hashtags retrieved from Twitter API, chart presenting their popularity, lists of hashtags and Twitter
+profiles followed by user, current hashtag (may be from query, otherwise alphabetically first), list of most
+popular posts related to it, chart presenting their statistics, current profile (may be from query, otherwise
+alphabetically first), list of most popular posts related to it and chart presenting their statistics</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.query_view.QueryView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/query_view.html#QueryView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.query_view.QueryView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>post method is used to follow new hashtags and profiles
+:param query: query in view’s url; ignored here
+:param request: POST request with demanded hashtag or profile username
+:return: redirection to index page</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.unfollow_view">
+<span id="apps-twitter-analyser-views-unfollow-view-module"></span><h2>apps.twitter_analyser.views.unfollow_view module<a class="headerlink" href="#module-apps.twitter_analyser.views.unfollow_view" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.unfollow_view.unfollow_hashtag">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.unfollow_view.</span></span><span class="sig-name descname"><span class="pre">unfollow_hashtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/unfollow_view.html#unfollow_hashtag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.unfollow_view.unfollow_hashtag" title="Permalink to this definition">¶</a></dt>
+<dd><p>unfollow_hashtag deletes Hashtag object indicated by the user
+:param request: POST request
+:param pk: primary key of deleted Hashtag
+:return: redirection to index page</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.unfollow_view.unfollow_profile">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.unfollow_view.</span></span><span class="sig-name descname"><span class="pre">unfollow_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/unfollow_view.html#unfollow_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.unfollow_view.unfollow_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>unfollow_profile deletes TwitterProfile object indicated by the user
+:param request: POST request
+:param pk: primary key of deleted TwitterProfile
+:return: redirection to index page</p>
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apps.twitter_analyser.views" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apps.twitter_analyser.views package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.date_view">apps.twitter_analyser.views.date_view module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.index_view">apps.twitter_analyser.views.index_view module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.query_date_view">apps.twitter_analyser.views.query_date_view module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.query_view">apps.twitter_analyser.views.query_view module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.unfollow_view">apps.twitter_analyser.views.unfollow_view module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apps.twitter_analyser.utils.html"
+                        title="previous chapter">apps.twitter_analyser.utils package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apps.twitter_analyser.views.utils.html"
+                        title="next chapter">apps.twitter_analyser.views.utils package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/apps.twitter_analyser.views.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.utils.html" title="apps.twitter_analyser.views.utils package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.utils.html" title="apps.twitter_analyser.utils package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" >apps.twitter_analyser package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

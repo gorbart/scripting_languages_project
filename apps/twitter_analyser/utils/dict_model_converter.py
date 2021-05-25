@@ -1,4 +1,3 @@
-import collections
 import datetime
 
 from apps.twitter_analyser.models import TwitterProfile, Tweet, Hashtag

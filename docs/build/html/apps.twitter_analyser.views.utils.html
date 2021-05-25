@@ -1,0 +1,274 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>apps.twitter_analyser.views.utils package &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apps.users package" href="apps.users.html" />
+    <link rel="prev" title="apps.twitter_analyser.views package" href="apps.twitter_analyser.views.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.users.html" title="apps.users package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.html" title="apps.twitter_analyser.views package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" >apps.twitter_analyser package</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="apps.twitter_analyser.views.html" accesskey="U">apps.twitter_analyser.views package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views.utils package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="apps-twitter-analyser-views-utils-package">
+<h1>apps.twitter_analyser.views.utils package<a class="headerlink" href="#apps-twitter-analyser-views-utils-package" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-apps.twitter_analyser.views.utils.get_date_utils">
+<span id="apps-twitter-analyser-views-utils-get-date-utils-module"></span><h2>apps.twitter_analyser.views.utils.get_date_utils module<a class="headerlink" href="#module-apps.twitter_analyser.views.utils.get_date_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_date_utils.get_user_specifics_for_date">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_date_utils.</span></span><span class="sig-name descname"><span class="pre">get_user_specifics_for_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_date_utils.html#get_user_specifics_for_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_date_utils.get_user_specifics_for_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_user_specifics_for_date retrieves from request and database all data, necessary for later page content
+rendering, which are: AppUser instance, related to logged in user, hashtags and profiles followed by him, current
+(in the terms of the app) date (given by the user), trending hashtags retrieved from database saved on current date,
+on app’s earlier usages and list of dates of earlier usages.
+:param day: current date’s day
+:param month: current date’s month
+:param year: current date’s year
+:param request: GET request
+:return: current date, lists of dates, earlier trending hashtags, user’s followed hashtags and profiles</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_date_utils.handle_hashtags_tweets_for_date">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_date_utils.</span></span><span class="sig-name descname"><span class="pre">handle_hashtags_tweets_for_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_hashtag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_date_utils.html#handle_hashtags_tweets_for_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_date_utils.handle_hashtags_tweets_for_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_hashtags_tweets_for_date gets a hashtag and a date, then gets list of Tweets’ saved on given date from
+database and produces a chart of their popularity
+:param current_date: date, which should be save date of hashtag
+:param current_hashtag: hashtag, for which the function does all the processing
+:return: chart presenting current hashtag’s tweets’ popularity, list of current hashtag’s tweets (retrieved from
+database)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_date_utils.handle_profiles_tweets_for_date">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_date_utils.</span></span><span class="sig-name descname"><span class="pre">handle_profiles_tweets_for_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_profile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_date_utils.html#handle_profiles_tweets_for_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_date_utils.handle_profiles_tweets_for_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_profiles_tweets_for_date gets a profile and a date, then gets list of Tweets’ saved on given date from
+database and produces a chart of their popularity
+:param current_date: date, which should be save date of profile
+:param current_profile: profile, for which the function does all the processing
+:return: chart, presenting current profile’s tweets’ popularity, list of current profile’s tweets (retrieved from
+database)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_date_utils.handle_trending_hashtags_for_date">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_date_utils.</span></span><span class="sig-name descname"><span class="pre">handle_trending_hashtags_for_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trending_hashtags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_date_utils.html#handle_trending_hashtags_for_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_date_utils.handle_trending_hashtags_for_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_trending_hashtags_for_date gets trending hashtags’ set from database, converts it to a list, then produces
+a chart showing their popularity.
+:param trending_hashtags: set of trending hashtags from earlier app usages
+:return: chart showing popularity of earlier trending hashtags and a list of current trending hashtags (retrieved
+from API)</p>
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.utils.get_utils">
+<span id="apps-twitter-analyser-views-utils-get-utils-module"></span><h2>apps.twitter_analyser.views.utils.get_utils module<a class="headerlink" href="#module-apps.twitter_analyser.views.utils.get_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_utils.get_user_specifics">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_utils.</span></span><span class="sig-name descname"><span class="pre">get_user_specifics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_utils.html#get_user_specifics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_utils.get_user_specifics" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_user_specifics retrieves from request and database all data, necessary for later page content rendering, which
+is: AppUser instance, related to logged in user, hashtags and profiles followed by him, trending hashtags, retrieved
+from Twitter API on earlier usages and list of dates of earlier usages.
+:param request: GET request
+:return: lists of dates, earlier trending hashtags, user’s followed hashtags and profiles</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_utils.handle_current_hashtag">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_utils.</span></span><span class="sig-name descname"><span class="pre">handle_current_hashtag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_hashtag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_utils.html#handle_current_hashtag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_utils.handle_current_hashtag" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_current_hashtag gets a hashtag, then retrieves its most popular posts now from Twitter API, then
+produces chart showing the posts’ popularity and saves them in database.
+:param api_pipeline: TwitterApiPipeline instantiated with project’s credentials
+:param current_hashtag: hashtag, for which the function does all the processing
+:return: list of current hashtags’ tweets (retrieved from API) and chart, presenting their popularity</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_utils.handle_current_profile">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_utils.</span></span><span class="sig-name descname"><span class="pre">handle_current_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_profile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_utils.html#handle_current_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_utils.handle_current_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_current_profile gets a Twitter profile, then retrieves its most popular posts now from Twitter API, then
+produces chart showing the posts’ popularity and saves them in database.
+:param api_pipeline: TwitterApiPipeline instantiated with project’s credentials
+:param current_profile: profile, for which the function does all the processing
+:return: list of current profiles’ tweets (retrieved from API) and chart, presenting their popularity</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.get_utils.handle_trending_hashtags">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.get_utils.</span></span><span class="sig-name descname"><span class="pre">handle_trending_hashtags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trending_hashtags_from_db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/get_utils.html#handle_trending_hashtags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.get_utils.handle_trending_hashtags" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_trending_hashtags gets currently trending hashtags from Twitter API, then produces chart showing their
+popularity and saves them in database if they haven’t been saved already today.
+:param api_pipeline: TwitterApiPipeline instantiated with project’s credentials
+:param trending_hashtags_from_db: list of trending hashtags from earlier app usages
+:return: list of current trending hashtags (retrieved from API) and chart, presenting their popularity</p>
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.utils.post_utils">
+<span id="apps-twitter-analyser-views-utils-post-utils-module"></span><h2>apps.twitter_analyser.views.utils.post_utils module<a class="headerlink" href="#module-apps.twitter_analyser.views.utils.post_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.post_utils.handle_hashtag_following">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.post_utils.</span></span><span class="sig-name descname"><span class="pre">handle_hashtag_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hashtag_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appuser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/post_utils.html#handle_hashtag_following"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.post_utils.handle_hashtag_following" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_hashtag_following takes hashtag input query and TwitterAPIPipeline instance. With query uses
+the pipeline to retrieve given Hashtag-related Tweets. Then it checks if this hashtag is not already followed by the
+user. If it isn’t and Tweet retrieving was successful, the function saves Hashtag instance and its Tweets. It also
+adds Hashtag to user’s followed Hashtags. User is stored in the request parameter (it’s modified).
+:param hashtag_input: hashtag’s text, given by the user
+:param appuser: AppUser instance, for which we perform the following
+:param api_pipeline: TwitterAPIPipeline instance, used for searching for Tweets, Hashtags and Profiles
+:return user’s input - formerly used to create Hashtag</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.post_utils.handle_new_following">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.post_utils.</span></span><span class="sig-name descname"><span class="pre">handle_new_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/post_utils.html#handle_new_following"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.post_utils.handle_new_following" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_new_following takes POST request and TwitterAPIPipeline instance and with query from the first one uses
+the pipeline to retrieve Hashtag or TwitterProfile with characteristics given by the user and most popular Tweets
+with these new followings. These contents are then stored in the request parameter (it’s modified).
+:param request: POST request with search query
+:param api_pipeline: TwitterAPIPipeline instance, used for searching for Tweets, Hashtags and Profiles
+:return user’s input - formerly used to create Hashtag or TwitterProfile</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="apps.twitter_analyser.views.utils.post_utils.handle_profile_following">
+<span class="sig-prename descclassname"><span class="pre">apps.twitter_analyser.views.utils.post_utils.</span></span><span class="sig-name descname"><span class="pre">handle_profile_following</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">appuser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/apps/twitter_analyser/views/utils/post_utils.html#handle_profile_following"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apps.twitter_analyser.views.utils.post_utils.handle_profile_following" title="Permalink to this definition">¶</a></dt>
+<dd><p>handle_profile_following takes profile input query and TwitterAPIPipeline instance. With query uses
+the pipeline to retrieve given Profile-related Tweets. Then it checks if this profile is not already followed by the
+user. If it isn’t and Profile retrieving was successful, the function saves TwitterProfile instance and its Tweets.
+It also adds TwitterProfile to user’s followed TwitterProfiles. User is stored in the request parameter (it’s
+modified).
+:param profile_input: profile’s username, given by the user
+:param appuser: AppUser instance, for which we perform the following
+:param api_pipeline: TwitterAPIPipeline instance, used for searching for Tweets, Hashtags and Profiles
+:return user’s input - formerly used to create TwitterProfile</p>
+</dd></dl>
+
+</section>
+<section id="module-apps.twitter_analyser.views.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apps.twitter_analyser.views.utils" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apps.twitter_analyser.views.utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.utils.get_date_utils">apps.twitter_analyser.views.utils.get_date_utils module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.utils.get_utils">apps.twitter_analyser.views.utils.get_utils module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.utils.post_utils">apps.twitter_analyser.views.utils.post_utils module</a></li>
+<li><a class="reference internal" href="#module-apps.twitter_analyser.views.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apps.twitter_analyser.views.html"
+                        title="previous chapter">apps.twitter_analyser.views package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apps.users.html"
+                        title="next chapter">apps.users package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/apps.twitter_analyser.views.utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apps.users.html" title="apps.users package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apps.twitter_analyser.views.html" title="apps.twitter_analyser.views package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >scripting_languages_project</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="apps.html" >apps package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="apps.twitter_analyser.html" >apps.twitter_analyser package</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="apps.twitter_analyser.views.html" >apps.twitter_analyser.views package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views.utils package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

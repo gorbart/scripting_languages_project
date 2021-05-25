@@ -1,0 +1,136 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.twitter_analyser.tests.models &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.tests.models</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.twitter_analyser.tests.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">apps.twitter_analyser.models</span> <span class="kn">import</span> <span class="n">Tweet</span><span class="p">,</span> <span class="n">TwitterProfile</span><span class="p">,</span> <span class="n">Hashtag</span>
+
+
+<div class="viewcode-block" id="ModelsTest"><a class="viewcode-back" href="../../../../apps.twitter_analyser.tests.html#apps.twitter_analyser.tests.models.ModelsTest">[docs]</a><span class="k">class</span> <span class="nc">ModelsTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelsTest.test_tweet_was_saved_without_author"><a class="viewcode-back" href="../../../../apps.twitter_analyser.tests.html#apps.twitter_analyser.tests.models.ModelsTest.test_tweet_was_saved_without_author">[docs]</a>    <span class="k">def</span> <span class="nf">test_tweet_was_saved_without_author</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+                                     <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">likes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelsTest.test_models_relations"><a class="viewcode-back" href="../../../../apps.twitter_analyser.tests.html#apps.twitter_analyser.tests.models.ModelsTest.test_models_relations">[docs]</a>    <span class="k">def</span> <span class="nf">test_models_relations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">author</span> <span class="o">=</span> <span class="n">TwitterProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
+                                     <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">likes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">)</span>
+        <span class="n">hashtag</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">hashtag</span><span class="o">.</span><span class="n">tweets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="n">author</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">hashtag</span><span class="o">.</span><span class="n">tweets</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span> <span class="n">tweet</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelsTest.test_models_strs"><a class="viewcode-back" href="../../../../apps.twitter_analyser.tests.html#apps.twitter_analyser.tests.models.ModelsTest.test_models_strs">[docs]</a>    <span class="k">def</span> <span class="nf">test_models_strs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">author</span> <span class="o">=</span> <span class="n">TwitterProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">)</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">Tweet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
+                                     <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">likes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="n">author</span><span class="p">)</span>
+        <span class="n">hashtag</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">author</span><span class="p">),</span> <span class="s2">&quot;Twitter profile username with id 1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Tweet posted on </span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2"> with text: text. Posted by username&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">hashtag</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;#text used by 1 tweets&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelsTest.test_models_eqs"><a class="viewcode-back" href="../../../../apps.twitter_analyser.tests.html#apps.twitter_analyser.tests.models.ModelsTest.test_models_eqs">[docs]</a>    <span class="k">def</span> <span class="nf">test_models_eqs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">author1</span> <span class="o">=</span> <span class="n">TwitterProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+        <span class="n">author2</span> <span class="o">=</span> <span class="n">TwitterProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+        <span class="n">tweet1</span> <span class="o">=</span> <span class="n">Tweet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+                                     <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">likes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                     <span class="n">author</span><span class="o">=</span><span class="n">author1</span><span class="p">)</span>
+        <span class="n">tweet2</span> <span class="o">=</span> <span class="n">Tweet</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+                                      <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">likes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                      <span class="n">author</span><span class="o">=</span><span class="n">author2</span><span class="p">)</span>
+        <span class="n">hashtag1</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">hashtag2</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">author1</span><span class="p">,</span> <span class="n">author2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">tweet1</span><span class="p">,</span> <span class="n">tweet2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">hashtag1</span><span class="p">,</span> <span class="n">hashtag2</span><span class="p">)</span></div></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.tests.models</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

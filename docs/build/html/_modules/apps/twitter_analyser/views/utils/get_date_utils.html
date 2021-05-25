@@ -1,0 +1,170 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.twitter_analyser.views.utils.get_date_utils &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views.utils.get_date_utils</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.twitter_analyser.views.utils.get_date_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">apps.twitter_analyser.models</span> <span class="kn">import</span> <span class="n">Hashtag</span>
+<span class="kn">from</span> <span class="nn">apps.twitter_analyser.utils.plot_painter</span> <span class="kn">import</span> <span class="n">PlotPainter</span>
+
+
+<div class="viewcode-block" id="get_user_specifics_for_date"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.views.utils.html#apps.twitter_analyser.views.utils.get_date_utils.get_user_specifics_for_date">[docs]</a><span class="k">def</span> <span class="nf">get_user_specifics_for_date</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get_user_specifics_for_date retrieves from request and database all data, necessary for later page content</span>
+<span class="sd">    rendering, which are: AppUser instance, related to logged in user, hashtags and profiles followed by him, current</span>
+<span class="sd">    (in the terms of the app) date (given by the user), trending hashtags retrieved from database saved on current date,</span>
+<span class="sd">    on app&#39;s earlier usages and list of dates of earlier usages.</span>
+<span class="sd">    :param day: current date&#39;s day</span>
+<span class="sd">    :param month: current date&#39;s month</span>
+<span class="sd">    :param year: current date&#39;s year</span>
+<span class="sd">    :param request: GET request</span>
+<span class="sd">    :return: current date, lists of dates, earlier trending hashtags, user&#39;s followed hashtags and profiles</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">appuser</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">appuser</span>
+    <span class="n">users_hashtags</span> <span class="o">=</span> <span class="n">appuser</span><span class="o">.</span><span class="n">hashtag_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">users_profiles</span> <span class="o">=</span> <span class="n">appuser</span><span class="o">.</span><span class="n">twitterprofile_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">trending_hashtags_from_db</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">dates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">hashtag</span><span class="o">.</span><span class="n">save_date</span> <span class="k">for</span> <span class="n">hashtag</span> <span class="ow">in</span> <span class="n">trending_hashtags_from_db</span><span class="p">]))</span>
+    <span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
+    <span class="n">trending_hashtags</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">appuser__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">current_date</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">current_date</span><span class="p">,</span> <span class="n">dates</span><span class="p">,</span> <span class="n">trending_hashtags</span><span class="p">,</span> <span class="n">users_hashtags</span><span class="p">,</span> <span class="n">users_profiles</span></div>
+
+
+<div class="viewcode-block" id="handle_trending_hashtags_for_date"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.views.utils.html#apps.twitter_analyser.views.utils.get_date_utils.handle_trending_hashtags_for_date">[docs]</a><span class="k">def</span> <span class="nf">handle_trending_hashtags_for_date</span><span class="p">(</span><span class="n">trending_hashtags</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    handle_trending_hashtags_for_date gets trending hashtags&#39; set from database, converts it to a list, then produces</span>
+<span class="sd">    a chart showing their popularity.</span>
+<span class="sd">    :param trending_hashtags: set of trending hashtags from earlier app usages</span>
+<span class="sd">    :return: chart showing popularity of earlier trending hashtags and a list of current trending hashtags (retrieved</span>
+<span class="sd">    from API)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">trending_hashtags</span><span class="p">:</span>
+        <span class="n">trending_hashtags_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">trending_hashtag</span> <span class="k">for</span> <span class="n">trending_hashtag</span> <span class="ow">in</span> <span class="n">trending_hashtags</span><span class="p">]</span>
+
+        <span class="n">trending_hashtags_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">hashtag</span><span class="p">:</span> <span class="n">hashtag</span><span class="o">.</span><span class="n">tweet_volume</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">trending_hashtags_chart</span> <span class="o">=</span> <span class="n">PlotPainter</span><span class="o">.</span><span class="n">plot_hashtags</span><span class="p">(</span><span class="n">trending_hashtags_list</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trending_hashtags_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">trending_hashtags_chart</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">trending_hashtags_chart</span><span class="p">,</span> <span class="n">trending_hashtags_list</span></div>
+
+
+<div class="viewcode-block" id="handle_hashtags_tweets_for_date"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.views.utils.html#apps.twitter_analyser.views.utils.get_date_utils.handle_hashtags_tweets_for_date">[docs]</a><span class="k">def</span> <span class="nf">handle_hashtags_tweets_for_date</span><span class="p">(</span><span class="n">current_date</span><span class="p">,</span> <span class="n">current_hashtag</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    handle_hashtags_tweets_for_date gets a hashtag and a date, then gets list of Tweets&#39; saved on given date from</span>
+<span class="sd">    database and produces a chart of their popularity</span>
+<span class="sd">    :param current_date: date, which should be save date of hashtag</span>
+<span class="sd">    :param current_hashtag: hashtag, for which the function does all the processing</span>
+<span class="sd">    :return: chart presenting current hashtag&#39;s tweets&#39; popularity, list of current hashtag&#39;s tweets (retrieved from</span>
+<span class="sd">    database)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">hashtags_tweets</span> <span class="o">=</span> <span class="n">current_hashtag</span><span class="o">.</span><span class="n">tweets</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">current_date</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+    <span class="n">hashtags_tweets_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">hashtags_tweet</span> <span class="k">for</span> <span class="n">hashtags_tweet</span> <span class="ow">in</span> <span class="n">hashtags_tweets</span><span class="p">]</span>
+    <span class="n">hashtags_tweets_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">tweet</span><span class="p">:</span> <span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">retweets</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">likes</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hashtags_tweets_list</span> <span class="o">=</span> <span class="n">hashtags_tweets_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+    <span class="n">hashtags_tweets_chart</span> <span class="o">=</span> <span class="n">PlotPainter</span><span class="o">.</span><span class="n">plot_tweets</span><span class="p">(</span><span class="n">hashtags_tweets_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">hashtags_tweets</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">hashtags_tweets_chart</span><span class="p">,</span> <span class="n">hashtags_tweets_list</span></div>
+
+
+<div class="viewcode-block" id="handle_profiles_tweets_for_date"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.views.utils.html#apps.twitter_analyser.views.utils.get_date_utils.handle_profiles_tweets_for_date">[docs]</a><span class="k">def</span> <span class="nf">handle_profiles_tweets_for_date</span><span class="p">(</span><span class="n">current_date</span><span class="p">,</span> <span class="n">current_profile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    handle_profiles_tweets_for_date gets a profile and a date, then gets list of Tweets&#39; saved on given date from</span>
+<span class="sd">    database and produces a chart of their popularity</span>
+<span class="sd">    :param current_date: date, which should be save date of profile</span>
+<span class="sd">    :param current_profile: profile, for which the function does all the processing</span>
+<span class="sd">    :return: chart, presenting current profile&#39;s tweets&#39; popularity, list of current profile&#39;s tweets (retrieved from</span>
+<span class="sd">    database)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">profiles_tweets</span> <span class="o">=</span> <span class="n">current_profile</span><span class="o">.</span><span class="n">tweet_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">save_date</span><span class="o">=</span><span class="n">current_date</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+    <span class="n">profiles_tweets_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">hashtags_tweet</span> <span class="k">for</span> <span class="n">hashtags_tweet</span> <span class="ow">in</span> <span class="n">profiles_tweets</span><span class="p">]</span>
+    <span class="n">profiles_tweets_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">tweet</span><span class="p">:</span> <span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">retweets</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">likes</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">profiles_tweets_list</span> <span class="o">=</span> <span class="n">profiles_tweets_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+    <span class="n">profiles_tweets_chart</span> <span class="o">=</span> <span class="n">PlotPainter</span><span class="o">.</span><span class="n">plot_tweets</span><span class="p">(</span><span class="n">profiles_tweets_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">profiles_tweets</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">profiles_tweets_chart</span><span class="p">,</span> <span class="n">profiles_tweets_list</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.views.utils.get_date_utils</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

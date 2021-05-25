@@ -23,7 +23,7 @@ class TwitterApiHandler:
         :param woeid: Yahoo Where On Earth IDentifier indicating geographical location of retrieved trends; default
         value is Poland's WOEID as current project is going to use it frequently
         :return: list of dictionaries with format {'text': hashtags' text, 'volume': number of hashtag's related Tweets
-        for specified country
+        for specified country}
         """
 
         return [{'text': trend['name'], 'tweet_volume': trend['tweet_volume']}

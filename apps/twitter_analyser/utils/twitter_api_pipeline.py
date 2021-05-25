@@ -8,7 +8,7 @@ class TwitterApiPipeline:
     TwitterApiPipeline class is created to make getting Twitter-related objects easier so that they can be ready to use
     just after get requests.
     Attributes:
-        api_handler - TwitterApiHandler class instance, created for use of getting models from Twitter API with
+        - api_handler - TwitterApiHandler class instance, created for use of getting models from Twitter API with
         generated key and secret
     """
 

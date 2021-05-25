@@ -1,0 +1,219 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.users.views &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.users.views</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.users.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">messages</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.mixins</span> <span class="kn">import</span> <span class="n">LoginRequiredMixin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">redirect</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">View</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">DeleteView</span>
+
+<span class="kn">from</span> <span class="nn">apps.users.forms</span> <span class="kn">import</span> <span class="n">UserForm</span><span class="p">,</span> <span class="n">LoginForm</span>
+<span class="kn">from</span> <span class="nn">apps.users.models</span> <span class="kn">import</span> <span class="n">AppUser</span>
+
+
+<div class="viewcode-block" id="RegisterView"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.RegisterView">[docs]</a><span class="k">class</span> <span class="nc">RegisterView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class RegisterView is used to render register html page and add new app&#39;s users</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">UserForm</span>
+
+<div class="viewcode-block" id="RegisterView.post"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.RegisterView.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        POST method gets registration form and checks for its validity. If it&#39;s valid, it creates Django User class</span>
+<span class="sd">        instance, sets its password, creates companion object AppUser and saves them in database</span>
+<span class="sd">        :param request: POST request</span>
+<span class="sd">        :return: register.html page with appropriate message and form</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">user_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form_class</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="n">registered</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">user_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+
+            <span class="n">user</span> <span class="o">=</span> <span class="n">user_form</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">user_form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">appuser</span> <span class="o">=</span> <span class="n">AppUser</span><span class="p">()</span>
+            <span class="n">appuser</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+            <span class="n">appuser</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">registered</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">user_form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;users/register.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;user_form&#39;</span><span class="p">:</span> <span class="n">user_form</span><span class="p">,</span> <span class="s1">&#39;registered&#39;</span><span class="p">:</span> <span class="n">registered</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="RegisterView.get"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.RegisterView.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET method renders registration page if user is not logged in and index page if he is</span>
+<span class="sd">        :param request: GET request</span>
+<span class="sd">        :return: register.html page with appropriate message and form or index page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;twitter_analyser/index.html&#39;</span><span class="p">)</span>
+
+        <span class="n">user_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form_class</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;users/register.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;user_form&#39;</span><span class="p">:</span> <span class="n">user_form</span><span class="p">,</span> <span class="s1">&#39;registered&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span></div></div>
+
+
+<div class="viewcode-block" id="LoginView"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.LoginView">[docs]</a><span class="k">class</span> <span class="nc">LoginView</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class LoginView is used to render login html page and allow app&#39;s users to log in it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">LoginForm</span>
+
+<div class="viewcode-block" id="LoginView.post"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.LoginView.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        POST method gets login form and checks for its validity. If it&#39;s valid, it tries to authenticate Django User</span>
+<span class="sd">        class instance</span>
+<span class="sd">        :param request: POST request</span>
+<span class="sd">        :return: index page if user successfully logged in or login page with appropriate message and form otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">login_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form_class</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">login_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">login_form</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">],</span> <span class="n">password</span><span class="o">=</span><span class="n">login_form</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">user</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>
+                <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;twitter_analyser:index&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messages</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;Username or password not correct&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">login_form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;users/login.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;login_form&#39;</span><span class="p">:</span> <span class="n">login_form</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="LoginView.get"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.LoginView.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        GET method renders login page if user is not logged in and index page if he is</span>
+<span class="sd">        :param request: GET request</span>
+<span class="sd">        :return: login page with appropriate message and form or index page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;twitter_analyser/index.html&#39;</span><span class="p">)</span>
+
+        <span class="n">login_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form_class</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;users/login.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;login_form&#39;</span><span class="p">:</span> <span class="n">login_form</span><span class="p">})</span></div></div>
+
+
+<div class="viewcode-block" id="LogoutView"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.LogoutView">[docs]</a><span class="k">class</span> <span class="nc">LogoutView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class LogoutView is used to log user out; earlier authentication is of course required</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LogoutView.get"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.LogoutView.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method logs user out in the app (if he is earlier logged in) and redirects him to login page</span>
+<span class="sd">        :param request: GET request</span>
+<span class="sd">        :return: redirect to login page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s1">&#39;users:login&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DeleteUserView"><a class="viewcode-back" href="../../../apps.users.html#apps.users.views.DeleteUserView">[docs]</a><span class="k">class</span> <span class="nc">DeleteUserView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DeleteUserView class extends Django template class DeleteView to use it for deleting users from database. User must</span>
+<span class="sd">    be earlier logged in. After deletion app user is redirected to login page. There is also a intermediate html page</span>
+<span class="sd">    asking for confirmation of deletion.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">&#39;users:login&#39;</span><span class="p">)</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;users/user_confirm_delete.html&#39;</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.users.views</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>

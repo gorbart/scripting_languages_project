@@ -1,0 +1,132 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apps.twitter_analyser.tests.utils.plot_painter &#8212; Scripting languages project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.tests.utils.plot_painter</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apps.twitter_analyser.tests.utils.plot_painter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">SimpleTestCase</span>
+
+<span class="kn">from</span> <span class="nn">apps.twitter_analyser.models</span> <span class="kn">import</span> <span class="n">Tweet</span><span class="p">,</span> <span class="n">Hashtag</span>
+<span class="kn">from</span> <span class="nn">apps.twitter_analyser.utils.plot_painter</span> <span class="kn">import</span> <span class="n">PlotPainter</span>
+
+
+<div class="viewcode-block" id="PlotPainterTest"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.tests.utils.html#apps.twitter_analyser.tests.utils.plot_painter.PlotPainterTest">[docs]</a><span class="k">class</span> <span class="nc">PlotPainterTest</span><span class="p">(</span><span class="n">SimpleTestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PlotPainterTest.test_tweet_plot"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.tests.utils.html#apps.twitter_analyser.tests.utils.plot_painter.PlotPainterTest.test_tweet_plot">[docs]</a>    <span class="k">def</span> <span class="nf">test_tweet_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="n">tweet1</span> <span class="o">=</span> <span class="n">Tweet</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text1&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                       <span class="n">likes</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+        <span class="n">tweet2</span> <span class="o">=</span> <span class="n">Tweet</span><span class="p">(</span><span class="n">tweet_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">creation_date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;text2&#39;</span><span class="p">,</span> <span class="n">save_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">retweets</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                       <span class="n">likes</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">tweets</span> <span class="o">=</span> <span class="p">[</span><span class="n">tweet1</span><span class="p">,</span> <span class="n">tweet2</span><span class="p">]</span>
+
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">PlotPainter</span><span class="o">.</span><span class="n">plot_tweets</span><span class="p">(</span><span class="n">tweets</span><span class="p">)</span>
+
+        <span class="n">fh</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.html&#39;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;file://&#39;</span> <span class="o">+</span> <span class="n">path</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlotPainterTest.test_hashtag_plot"><a class="viewcode-back" href="../../../../../apps.twitter_analyser.tests.utils.html#apps.twitter_analyser.tests.utils.plot_painter.PlotPainterTest.test_hashtag_plot">[docs]</a>    <span class="k">def</span> <span class="nf">test_hashtag_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">hashtag1</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text1&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">hashtag2</span> <span class="o">=</span> <span class="n">Hashtag</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;#text2&#39;</span><span class="p">,</span> <span class="n">tweet_volume</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">hashtags</span> <span class="o">=</span> <span class="p">[</span><span class="n">hashtag1</span><span class="p">,</span> <span class="n">hashtag2</span><span class="p">]</span>
+
+        <span class="n">plot</span> <span class="o">=</span> <span class="n">PlotPainter</span><span class="o">.</span><span class="n">plot_hashtags</span><span class="p">(</span><span class="n">hashtags</span><span class="p">)</span>
+
+        <span class="n">fh</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.html&#39;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;file://&#39;</span> <span class="o">+</span> <span class="n">path</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">Scripting languages project  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apps.twitter_analyser.tests.utils.plot_painter</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Bartłomiej Góral.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+  </body>
+</html>
